@@ -1,6 +1,3 @@
-//University management system
-//First c++ project
-//Copyright Drin Kurtishi
 #include <iostream>
 #include <cstring>
 #include <string>
