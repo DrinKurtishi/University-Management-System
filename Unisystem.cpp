@@ -139,7 +139,15 @@ class Student{
             }
         }
 
-        Student(std::string name, std::string surname, std::string id, std::string faculty){//constructor
+        Student() //default constructor for all students
+        {
+            Name = "blank";
+            Surname = "blank";
+            ID = "blank";
+            Faculty = "blank";
+        }
+        Student(std::string name, std::string surname, std::string id, std::string faculty) //constructor
+        {
             Name = name;
             Surname = surname;
             ID = id;
@@ -162,7 +170,8 @@ int main()
     std::string ID;
     std::string Faculty;
     int i = 0;
-    Student student[] = {Student("blank", "blank", "blank", "blank")};//initial blank student as an object array
+    const int maxSize = 100;
+    Student student[maxSize];
 do{
     std::cout << "\nPress 1 to register new student: \n";
     std::cout << "\nPress 2 to view student list: \n";
@@ -212,11 +221,10 @@ do{
         for(int j = 0; j<i; j++)
         {
             student[j].showStudentInfo();
+            std::cout << std::endl;
         }
         break;  
-
-        default:
-            std::cout << "Invalid choice. Please try again.\n";   
+ 
     }
 
 }while(choice != 3);
