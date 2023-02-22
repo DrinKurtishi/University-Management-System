@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <limits>
 //commit test
 class Student{
     private:
@@ -160,11 +161,12 @@ int main()
     std::string Surname;
     std::string ID;
     std::string Faculty;
-    Student Drin = Student("blank", "blank", "blank", "blank");//initial blank student
-
+    int i = 0;
+    Student student[] = {Student("blank", "blank", "blank", "blank")};//initial blank student as an object array
 do{
-    std::cout << "Press 1 to register new student: \n";
-    std::cout << "Press 2 to view student list: \n";
+    std::cout << "\nPress 1 to register new student: \n";
+    std::cout << "\nPress 2 to view student list: \n";
+    std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
     std::cin >> choice;
 
     switch(choice){
@@ -173,40 +175,52 @@ do{
                 std::cout << "Enter Student Name: ";
                 std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
                 std::getline(std::cin, Name);
-                Drin.setName(Name);
+                student[i].setName(Name);
             }
-            while(Drin.nameFlag == true);
+            while(student[i].nameFlag == true);
+    
 
             do{
                 std::cout << "Enter Student Surname: ";
                 std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
                 std::getline(std::cin, Surname);
-                Drin.setSurname(Surname);
+                student[i].setSurname(Surname);
             }
-            while(Drin.surnameFlag == true);
-        
+            while(student[i].surnameFlag == true);
+         
+
             do{
                 std::cout << "Enter student ID: ";
                 std::cin >> ID;
-                Drin.setID(ID);
+                student[i].setID(ID);
             }
-            while(Drin.IDflag == true);//if invalid ID, prompt again.
+            while(student[i].IDflag == true);//if invalid ID, prompt again.
+        
 
             do{
                 std::cout << "Enter student Faculty: ";
                 std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
                 std::getline(std::cin, Faculty);
-                Drin.setFaculty(Faculty); 
+                student[i].setFaculty(Faculty); 
             }
-            while(Drin.facultyFlag == true);
+            while(student[i].facultyFlag == true);
+            std::cout << "Student has been succesfully registered!\n";
+            i++; //increment i to move to the next student in the array
         break;
 
         case 2:
-            Drin.showStudentInfo();  
-            break;     
+        for(int j = 0; j<i; j++)
+        {
+            student[j].showStudentInfo();
+        }
+        break;  
+
+        default:
+            std::cout << "Invalid choice. Please try again.\n";   
     }
 
-}while(true);
+}while(choice != 3);
+
 }
 
     
