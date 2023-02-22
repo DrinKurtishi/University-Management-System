@@ -163,10 +163,11 @@ int main()
     Student Drin = Student("blank", "blank", "blank", "blank");//initial blank student
 
         std::cout << "Press 1 to register new student: \n";
+        std::cout << "Press 2 to view student list: \n";
         std::cin >> choice;
-        if(choice == 1)
-        {
 
+    switch(choice){
+        case 1:
             do{
                 std::cout << "Enter Student Name: ";
                 std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
@@ -197,16 +198,14 @@ int main()
                 Drin.setFaculty(Faculty); 
             }
             while(Drin.facultyFlag == true);
+        break;
 
-        }
-
-        std::cout << "Press 2 to see your student: ";
-        std::cin >> choice;
-        if(choice == 2)
-        {
-            Drin.showStudentInfo();
-        }
+        case 2:
+            Drin.showStudentInfo();  
+            break;     
     }
+
+}
 
     
     
