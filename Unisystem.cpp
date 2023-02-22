@@ -100,18 +100,32 @@ class Student{
                     break;
                 } 
             }
-            if(continueCheck == true){//If there aren't any non digits in newID, check if there are exactly 6 numbers
-                if(IDlength < 6 || IDlength > 6)
-                {
+            if(continueCheck == true)
+            {
+                if(newID.find(' ') != std::string::npos)
+                { 
                     std::cout << "Invalid ID, ID must consist of 6 numbers.\n";
                     IDflag = true;
-                }  
+                    continueCheck = false;
+                } 
                 else
-                {//if there are exactly 6 numbers without letters then continue student registration
-                    ID = newID;
-                    IDflag = false;
+                {
+                    if(continueCheck == true)//If there aren't any non digits in newID, check if there are exactly 6 numbers
+                    {
+                
+                        if(IDlength < 6 || IDlength > 6)
+                        {
+                            std::cout << "Invalid ID, ID must consist of 6 numbers.\n";
+                            IDflag = true;
+                        }
+                        else
+                        {//if there are exactly 6 numbers without letters then continue student registration
+                            ID = newID;
+                            IDflag = false;
+                        }
+                    }
                 }
-            }
+            }     
         }
         
         std::string getFaculty()
@@ -179,11 +193,11 @@ int main()
         std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
         std::cin >> choice;
 
-        if(!std::cin)
+        if(!std::cin)//if input fails(user enters a char)
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            choice = 4;
+            choice = 999;//set choice to an invalid input so default case is triggered
         }
         switch(choice)
         { 
@@ -208,11 +222,11 @@ int main()
 
                 do{
                     std::cout << "Enter student ID: ";
-                    std::cin >> std::ws;
-                    std::cin >> ID;
+                    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
+                    std::getline(std::cin, ID);
                     student[i].setID(ID);
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    //std::cin.clear();
+                    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
                 while(student[i].IDflag == true);//if invalid ID, prompt again.
         
