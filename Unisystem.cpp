@@ -209,9 +209,10 @@ int main()
                 do{
                     std::cout << "Enter student ID: ";
                     std::cin >> std::ws;
-                    std::cin.clear();
                     std::cin >> ID;
                     student[i].setID(ID);
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
                 while(student[i].IDflag == true);//if invalid ID, prompt again.
         
