@@ -162,9 +162,10 @@ int main()
     std::string Faculty;
     Student Drin = Student("blank", "blank", "blank", "blank");//initial blank student
 
-        std::cout << "Press 1 to register new student: \n";
-        std::cout << "Press 2 to view student list: \n";
-        std::cin >> choice;
+do{
+    std::cout << "Press 1 to register new student: \n";
+    std::cout << "Press 2 to view student list: \n";
+    std::cin >> choice;
 
     switch(choice){
         case 1:
@@ -205,6 +206,7 @@ int main()
             break;     
     }
 
+}while(true);
 }
 
     
