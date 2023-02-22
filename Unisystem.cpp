@@ -88,6 +88,8 @@ class Student{
         }
         void setID(std::string newID)
         {
+            //this code checks in newID if there only and ONLY 6 numbers
+
             int IDlength = newID.length();
             bool continueCheck = true;//flag to continue checking validity if first validity check passes
             for(int i = 0; i < IDlength; i++)
@@ -102,7 +104,7 @@ class Student{
             }
             if(continueCheck == true)
             {
-                if(newID.find(' ') != std::string::npos)
+                if(newID.find(' ') != std::string::npos)//if there is a space in newID (indicating an input of two block of text) then prompt for new ID
                 { 
                     std::cout << "Invalid ID, ID must consist of 6 numbers.\n";
                     IDflag = true;
@@ -179,6 +181,7 @@ class Student{
 int main()
 {
     int choice;
+    std::string input;
     std::string Name;
     std::string Surname;
     std::string ID;
@@ -191,7 +194,7 @@ int main()
         std::cout << "\nPress 1 to register new student: \n";
         std::cout << "\nPress 2 to view student list: \n";
         std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
-        std::cin >> choice;
+        std::getline(std::cin, input);
 
         if(!std::cin)//if input fails(user enters a char)
         {
@@ -199,9 +202,19 @@ int main()
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             choice = 999;//set choice to an invalid input so default case is triggered
         }
+
+        if (input.length() == 1 && std::isdigit(input[0])) {
+            choice = input[0] - '0';  // Convert char to int
+            // Use choice as needed
+        }
+        else 
+        {
+            choice = 999;//set choice to an invalid input so default case is triggered
+        }
+        
         switch(choice)
         { 
-            case 1:
+            case 1://registers new student
                 do{
                     std::cout << "Enter Student Name: ";
                     std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
@@ -225,8 +238,6 @@ int main()
                     std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
                     std::getline(std::cin, ID);
                     student[i].setID(ID);
-                    //std::cin.clear();
-                    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
                 while(student[i].IDflag == true);//if invalid ID, prompt again.
         
@@ -238,11 +249,12 @@ int main()
                     student[i].setFaculty(Faculty); 
                 }
                 while(student[i].facultyFlag == true);
-                std::cout << "Student has been succesfully registered!\n";
+                std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()
+                          << " has been succesfuly registered!\n";
                 i++; //increment i to move to the next student in the array
             break;
 
-            case 2:
+            case 2://shows list of all students
             for(int j = 0; j<i; j++)
             {
                 student[j].showStudentInfo();
@@ -261,7 +273,6 @@ int main()
         }
 
     }while(exitLoop == false);
-
 }
 
     
