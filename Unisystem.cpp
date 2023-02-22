@@ -170,64 +170,82 @@ int main()
     std::string ID;
     std::string Faculty;
     int i = 0;
+    bool exitLoop = false;
     const int maxSize = 100;
-    Student student[maxSize];
-do{
-    std::cout << "\nPress 1 to register new student: \n";
-    std::cout << "\nPress 2 to view student list: \n";
-    std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
-    std::cin >> choice;
+    Student student[maxSize];//max 100 students, all having blank attributes
+    do{
+        std::cout << "\nPress 1 to register new student: \n";
+        std::cout << "\nPress 2 to view student list: \n";
+        std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
+        std::cin >> choice;
 
-    switch(choice){
-        case 1:
-            do{
-                std::cout << "Enter Student Name: ";
-                std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
-                std::getline(std::cin, Name);
-                student[i].setName(Name);
-            }
-            while(student[i].nameFlag == true);
+        if(!std::cin)
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            choice = 4;
+        }
+        switch(choice)
+        { 
+            case 1:
+                do{
+                    std::cout << "Enter Student Name: ";
+                    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
+                    std::getline(std::cin, Name);
+                    student[i].setName(Name);
+                }
+                while(student[i].nameFlag == true);
     
 
-            do{
-                std::cout << "Enter Student Surname: ";
-                std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
-                std::getline(std::cin, Surname);
-                student[i].setSurname(Surname);
-            }
-            while(student[i].surnameFlag == true);
+                do{
+                    std::cout << "Enter Student Surname: ";
+                    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
+                    std::getline(std::cin, Surname);
+                    student[i].setSurname(Surname);
+                }
+                while(student[i].surnameFlag == true);
          
 
-            do{
-                std::cout << "Enter student ID: ";
-                std::cin >> ID;
-                student[i].setID(ID);
-            }
-            while(student[i].IDflag == true);//if invalid ID, prompt again.
+                do{
+                    std::cout << "Enter student ID: ";
+                    std::cin >> std::ws;
+                    std::cin.clear();
+                    std::cin >> ID;
+                    student[i].setID(ID);
+                }
+                while(student[i].IDflag == true);//if invalid ID, prompt again.
         
 
-            do{
-                std::cout << "Enter student Faculty: ";
-                std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
-                std::getline(std::cin, Faculty);
-                student[i].setFaculty(Faculty); 
+                do{
+                    std::cout << "Enter student Faculty: ";
+                    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
+                    std::getline(std::cin, Faculty);
+                    student[i].setFaculty(Faculty); 
+                }
+                while(student[i].facultyFlag == true);
+                std::cout << "Student has been succesfully registered!\n";
+                i++; //increment i to move to the next student in the array
+            break;
+
+            case 2:
+            for(int j = 0; j<i; j++)
+            {
+                student[j].showStudentInfo();
+                std::cout << std::endl;
             }
-            while(student[i].facultyFlag == true);
-            std::cout << "Student has been succesfully registered!\n";
-            i++; //increment i to move to the next student in the array
-        break;
+            break; 
 
-        case 2:
-        for(int j = 0; j<i; j++)
-        {
-            student[j].showStudentInfo();
-            std::cout << std::endl;
-        }
-        break;  
+            case 3:
+                std::cout<< "Terminating program.. Thank you for using UniSystem!\n";
+                exitLoop = true;
+            break; 
+
+            default:
+                std::cout << "Invalid input, please try again.\n";
  
-    }
+        }
 
-}while(choice != 3);
+    }while(exitLoop == false);
 
 }
 
