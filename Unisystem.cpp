@@ -3,11 +3,18 @@
 #include <string>
 #include <limits>
 
-std::string formatString(std::string userInput)//function to capitalize first letter if user doesn't
+std::string formatString(std::string userInput, int inputLength)//function to capitalize first letter if user doesn't and decapitalize subsequent letters if user does
 {
     if(islower(userInput[0]))
     {
         userInput[0] = toupper(userInput[0]);
+    }
+    for(int i = 1; i < inputLength; i++)//i is 1 so it doesnt check first letter
+    {   
+        if(isupper(userInput[i]))
+        {
+            userInput[i] = tolower(userInput[i]);
+        }
     }
     return userInput;
 }
@@ -54,7 +61,7 @@ class Student{
                 }
                 else
                 {
-                    newName = formatString(newName);
+                    newName = formatString(newName, nameLength);
                     Name = newName;
                     nameFlag = false;
                 }
@@ -87,7 +94,7 @@ class Student{
                 }
                 else
                 {
-                    newSurname = formatString(newSurname);
+                    newSurname = formatString(newSurname, surnameLength);
                     Surname = newSurname;
                     surnameFlag = false;
                 }
@@ -162,7 +169,7 @@ class Student{
             }
             if(print == true)
             {
-                newFaculty = formatString(newFaculty);
+                newFaculty = formatString(newFaculty, newfacultyLength);
                 Faculty = newFaculty;
                 facultyFlag = false;
             }
@@ -260,7 +267,7 @@ int main()
             break;
 
             case 2://shows list of all students
-                if(i == 0)
+                if(i == 0)//if user chooses case 2 before registering any students execute this
                 {
                     std::cout << "Please enter at least one student.\n";
                 }
@@ -274,7 +281,7 @@ int main()
                 }
             break; 
 
-            case 3:
+            case 3://Ends program
                 std::cout<< "Terminating program.. Thank you for using UniSystem!\n";
                 exitLoop = true;
             break; 
