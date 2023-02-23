@@ -2,7 +2,16 @@
 #include <cstring>
 #include <string>
 #include <limits>
-//commit test
+
+std::string formatString(std::string userInput)
+{
+    if(islower(userInput[0]))
+    {
+        userInput[0] = toupper(userInput[0]);
+    }
+    return userInput;
+}
+
 class Student{
     private:
         std::string Name;
@@ -11,9 +20,10 @@ class Student{
         std::string Faculty;
 
     public:
+        //flag to check if user input is valid
         bool surnameFlag = false; 
         bool nameFlag = false;
-        bool IDflag = false;//to check ID validity
+        bool IDflag = false;
         bool facultyFlag = false;
 
         //getters and setters for private variables
@@ -44,6 +54,7 @@ class Student{
                 }
                 else
                 {
+                    newName = formatString(newName);
                     Name = newName;
                     nameFlag = false;
                 }
@@ -76,6 +87,7 @@ class Student{
                 }
                 else
                 {
+                    newSurname = formatString(newSurname);
                     Surname = newSurname;
                     surnameFlag = false;
                 }
@@ -150,6 +162,7 @@ class Student{
             }
             if(print == true)
             {
+                newFaculty = formatString(newFaculty);
                 Faculty = newFaculty;
                 facultyFlag = false;
             }
@@ -203,9 +216,8 @@ int main()
             choice = 999;//set choice to an invalid input so default case is triggered
         }
 
-        if (input.length() == 1 && std::isdigit(input[0])) {
+        if (input.length() == 1 && std::isdigit(input[0])) {//accept choice input iff it it only one digit
             choice = input[0] - '0';  // Convert char to int
-            // Use choice as needed
         }
         else 
         {
