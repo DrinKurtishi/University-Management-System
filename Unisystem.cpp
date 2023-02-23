@@ -3,7 +3,7 @@
 #include <string>
 #include <limits>
 
-std::string formatString(std::string userInput)
+std::string formatString(std::string userInput)//function to capitalize first letter if user doesn't
 {
     if(islower(userInput[0]))
     {
@@ -209,13 +209,6 @@ int main()
         std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
         std::getline(std::cin, input);
 
-        if(!std::cin)//if input fails(user enters a char)
-        {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            choice = 999;//set choice to an invalid input so default case is triggered
-        }
-
         if (input.length() == 1 && std::isdigit(input[0])) {//accept choice input iff it it only one digit
             choice = input[0] - '0';  // Convert char to int
         }
@@ -267,11 +260,18 @@ int main()
             break;
 
             case 2://shows list of all students
-            for(int j = 0; j<i; j++)
-            {
-                student[j].showStudentInfo();
-                std::cout << std::endl;
-            }
+                if(i == 0)
+                {
+                    std::cout << "Please enter at least one student.\n";
+                }
+                else
+                {
+                    for(int j = 0; j<i; j++)
+                    {
+                        student[j].showStudentInfo();
+                        std::cout << std::endl;
+                    }
+                }
             break; 
 
             case 3:
