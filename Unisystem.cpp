@@ -2,6 +2,7 @@
 #include <cstring>
 #include <string>
 #include <limits>
+#include <stdlib.h>
 
 std::string formatString(std::string userInput, int inputLength)//function to capitalize first letter if user doesn't and decapitalize subsequent letters if user does
 {
@@ -11,8 +12,8 @@ std::string formatString(std::string userInput, int inputLength)//function to ca
     }
     for(int i = 1; i < inputLength; i++)//i is 1 so it doesnt check first letter
     {   
-        if(isupper(userInput[i]))
-        {
+        if(isupper(userInput[i]))                   //lowercase all uppercase       
+        {                                           //letters after first one
             userInput[i] = tolower(userInput[i]);
         }
     }
@@ -44,7 +45,7 @@ class Student{
             bool continueCheck = true;
             for(int i = 0; i < nameLength; i++)
             {
-                if(!isalpha(newName[i]))
+                if(!isalpha(newName[i]))//if theres a number in string the input
                 {
                     std::cout << "Invalid input: Name must be a single word and without numbers.\n";
                     nameFlag = true;
@@ -54,12 +55,12 @@ class Student{
             }
             if(continueCheck == true)
             {
-                if(newName.find(' ') != std::string::npos)
-                {//Makes input invalid if there is more than one word in input
+                if(newName.find(' ') != std::string::npos)//Makes input invalid if there is more than one word in input
+                {
                     std::cout << "Invalid input: Name must be a single word and without numbers.\n";
                     nameFlag = true;
                 }
-                else
+                else//if input is valid
                 {
                     newName = formatString(newName, nameLength);
                     Name = newName;
@@ -78,7 +79,7 @@ class Student{
             bool continueCheck = true;
             for(int i = 0; i < surnameLength; i++)
             {
-                if(!isalpha(newSurname[i]))
+                if(!isalpha(newSurname[i]))//if theres a number in string the input
                 {
                     std::cout << "Invalid input: Surname must be a single word and without numbers.\n";
                     surnameFlag = true;
@@ -87,12 +88,12 @@ class Student{
                 }
             }
             if(continueCheck == true){
-                if(newSurname.find(' ') != std::string::npos)
+                if(newSurname.find(' ') != std::string::npos)//Makes input invalid if there is more than one word in input
                 {//Makes input invalid if there is more than one word in input
                     std::cout << "Invalid input: Surname must be a single word and without numbers.\n";
                     surnameFlag = true;
                 }
-                else
+                else//if input is valid
                 {
                     newSurname = formatString(newSurname, surnameLength);
                     Surname = newSurname;
@@ -191,10 +192,10 @@ class Student{
         }
         void showStudentInfo()
         {
-            std::cout << "Student name: " << Name << "\n"
-                      << "Student surname: " << Surname << "\n"
-                      << "Student ID: " << ID << "\n"
-                      << "Student Faculty: " << Faculty << "\n";
+            std::cout << "Name: " << Name << "\n"
+                      << "Surname: " << Surname << "\n"
+                      << "ID: " << ID << "\n"
+                      << "Faculty: " << Faculty << "\n";
         }
 };
 
@@ -215,6 +216,7 @@ int main()
         std::cout << "\nPress 2 to view student list: \n";
         std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
         std::getline(std::cin, input);
+        system("CLS");
 
         if (input.length() == 1 && std::isdigit(input[0])) {//accept choice input iff it it only one digit
             choice = input[0] - '0';  // Convert char to int
@@ -233,7 +235,7 @@ int main()
                     std::getline(std::cin, Name);
                     student[i].setName(Name);
                 }
-                while(student[i].nameFlag == true);
+                while(student[i].nameFlag == true);//if invalid, prompt again.
     
 
                 do{
@@ -242,7 +244,7 @@ int main()
                     std::getline(std::cin, Surname);
                     student[i].setSurname(Surname);
                 }
-                while(student[i].surnameFlag == true);
+                while(student[i].surnameFlag == true);//if invalid, prompt again.
          
 
                 do{
@@ -251,7 +253,7 @@ int main()
                     std::getline(std::cin, ID);
                     student[i].setID(ID);
                 }
-                while(student[i].IDflag == true);//if invalid ID, prompt again.
+                while(student[i].IDflag == true);//if invalid, prompt again.
         
 
                 do{
@@ -260,8 +262,10 @@ int main()
                     std::getline(std::cin, Faculty);
                     student[i].setFaculty(Faculty); 
                 }
-                while(student[i].facultyFlag == true);
-                std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()
+                while(student[i].facultyFlag == true);//if invalid, prompt again.
+
+
+                std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()//display student name after registering
                           << " has been succesfuly registered!\n";
                 i++; //increment i to move to the next student in the array
             break;
@@ -275,6 +279,8 @@ int main()
                 {
                     for(int j = 0; j<i; j++)
                     {
+                        std::cout << "Student " << j + 1 << ": \n";
+                        std::cout << std::endl;
                         student[j].showStudentInfo();
                         std::cout << std::endl;
                     }
