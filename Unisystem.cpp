@@ -106,49 +106,12 @@ class Student{
         {
             return ID;
         }
+
         void setID(std::string newID)
         {
-            //this code checks in newID if there only and ONLY 6 numbers
-
-            int IDlength = newID.length();
-            bool continueCheck = true;//flag to continue checking validity if first validity check passes
-            for(int i = 0; i < IDlength; i++)
-            {
-                if (!isdigit(newID[i]))
-                {
-                    std::cout << "Invalid input: ID must only contain 6 numbers.\n";
-                    IDflag = true;
-                    continueCheck = false;//if there is a non digit in newID then prompt again for ID
-                    break;
-                } 
-            }
-            if(continueCheck == true)
-            {
-                if(newID.find(' ') != std::string::npos)//if there is a space in newID (indicating an input of two block of text) then prompt for new ID
-                { 
-                    std::cout << "Invalid ID, ID must consist of 6 numbers.\n";
-                    IDflag = true;
-                    continueCheck = false;
-                } 
-                else
-                {
-                    if(continueCheck == true)//If there aren't any non digits in newID, check if there are exactly 6 numbers
-                    {
-                
-                        if(IDlength < 6 || IDlength > 6)
-                        {
-                            std::cout << "Invalid ID, ID must consist of 6 numbers.\n";
-                            IDflag = true;
-                        }
-                        else
-                        {//if there are exactly 6 numbers without letters then continue student registration
-                            ID = newID;
-                            IDflag = false;
-                        }
-                    }
-                }
-            }     
+            ID = newID;
         }
+        
         
         std::string getFaculty()
         {
@@ -204,10 +167,15 @@ int main()
     int choice;
     std::string input;
     std::string Name;
+    std::string ID = "1308";
     std::string Surname;
-    std::string ID;
     std::string Faculty;
     int i = 0;
+
+    std::string uniqueID;
+    char A = '0', B = '0';
+    int a, b;
+
     bool exitLoop = false;
     const int maxSize = 100;
     Student student[maxSize];//max 100 students, all having blank attributes
@@ -245,17 +213,7 @@ int main()
                     student[i].setSurname(Surname);
                 }
                 while(student[i].surnameFlag == true);//if invalid, prompt again.
-         
-
-                do{
-                    std::cout << "Enter student ID: ";
-                    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
-                    std::getline(std::cin, ID);
-                    student[i].setID(ID);
-                }
-                while(student[i].IDflag == true);//if invalid, prompt again.
         
-
                 do{
                     std::cout << "Enter student Faculty: ";
                     std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
@@ -264,9 +222,27 @@ int main()
                 }
                 while(student[i].facultyFlag == true);//if invalid, prompt again.
 
-
                 std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()//display student name after registering
                           << " has been succesfuly registered!\n";
+
+            
+                //this code generates a unique ID for every new student from 123000 to 123099
+                
+                uniqueID = ID + A + B;
+                student[i].setID(uniqueID); //set unique ID to Student
+
+                b = (B - '0') + 1; //turn char to int and increment
+                B = b + '0';       //set char to new incremented value    
+
+                if(b == 10)
+                {
+                    b = 0;             //reset ones place to zero
+                    B = b + '0';       //set new value
+
+                    a = (A - '0') + 1; //same thing here, but increment
+                    A = a + '0';       //every 10 ID's
+                }
+
                 i++; //increment i to move to the next student in the array
             break;
 
