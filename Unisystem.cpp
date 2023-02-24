@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <time.h>
 #include <vector>
+#include <algorithm>
 
 std::string formatString(std::string userInput, int inputLength)//function to format users input
 {
@@ -182,6 +183,8 @@ int main()
     bool exitLoop = false;//to end program if user chooses
     std::vector<Student> student; //using vector instead of array to dynamically size it instead of having a prefixed limit of students
     Student newStudent;//create blank student object
+
+    std::vector<int> IDvector;
     do{
         std::cout << "\nPress 1 to register new student: \n";
         std::cout << "\nPress 2 to view student list: \n";
@@ -231,7 +234,12 @@ int main()
             
                 //this code generates a unique ID for every new student.
                 random = 130000 + (rand() % 9999); //generate random ID in range 130000 ~ 139999
-                ID = std::to_string(random);//convert random ID to a string
+                while(std::count(IDvector.begin(), IDvector.end(), random))//if random is duplicate in ID vector,
+                {                                                          //then generate a new ID until it is 
+                    random = 130000 + (rand() % 9999);                     //unique
+                }
+                IDvector.push_back(random);//adds ID to the vector
+                ID = std::to_string(random);//convert unique ID to a string
                 student[i].setID(ID); //set unique ID to Student
                 i++; //increment i to move to the next student in the array
 
