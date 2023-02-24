@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <cstdlib>
 #include <time.h>
+#include <vector>
 
 std::string formatString(std::string userInput, int inputLength)//function to format users input
 {
@@ -179,8 +180,8 @@ int main()
     int random;
 
     bool exitLoop = false;//to end program if user chooses
-    const int maxSize = 100;
-    Student student[maxSize];//max 100 students, all having blank attributes
+    std::vector<Student> student; //using vector instead of array to dynamically size it instead of having a prefixed limit of students
+    Student newStudent;//create blank student object
     do{
         std::cout << "\nPress 1 to register new student: \n";
         std::cout << "\nPress 2 to view student list: \n";
@@ -199,6 +200,7 @@ int main()
         switch(choice)
         { 
             case 1://registers new student
+                student.push_back(newStudent);//add blank student to vector
                 do{
                     std::cout << "Enter Student Name: ";
                     std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
