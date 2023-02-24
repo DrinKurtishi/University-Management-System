@@ -8,6 +8,8 @@
 #include <vector>
 #include <algorithm>
 
+std::string formatString(std::string userInput, int inputLength);
+
 class Student{
     private:
         std::string Name;
@@ -153,7 +155,6 @@ class Student{
 };
 
 //functions for main function
-std::string formatString(std::string userInput, int inputLength);
 int CheckAndSetID(int random, std::vector<int> IDvector);
 int ValidateChoice(std::string input);
 std::string GetAndSetAttribute(std::string Attribute);
@@ -194,13 +195,13 @@ int main()
     
                 do{
                     std::cout << "Enter Student Surname: ";
-                    student[i].setName(GetAndSetAttribute(Surname));
+                    student[i].setSurname(GetAndSetAttribute(Surname));
                 }
                 while(student[i].surnameFlag == true);//if invalid, prompt again.
         
                 do{
                     std::cout << "Enter student Faculty: ";
-                    student[i].setName(GetAndSetAttribute(Faculty));
+                    student[i].setFaculty(GetAndSetAttribute(Faculty));
                 }
                 while(student[i].facultyFlag == true);//if invalid, prompt again.
 
