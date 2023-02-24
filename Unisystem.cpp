@@ -8,22 +8,6 @@
 #include <vector>
 #include <algorithm>
 
-std::string formatString(std::string userInput, int inputLength)//function to format users input
-{
-    if(islower(userInput[0]))//capitalize first letter
-    {
-        userInput[0] = toupper(userInput[0]);
-    }
-    for(int i = 1; i < inputLength; i++)//i is 1 so it doesnt check first letter
-    {   
-        if(isupper(userInput[i]))                   //lowercase all uppercase       
-        {                                           //letters after first one
-            userInput[i] = tolower(userInput[i]);
-        }
-    }
-    return userInput;
-}
-
 class Student{
     private:
         std::string Name;
@@ -168,6 +152,12 @@ class Student{
         }
 };
 
+//functions for main function
+std::string formatString(std::string userInput, int inputLength);
+int CheckAndSetID(int random, std::vector<int> IDvector);
+int ValidateChoice(std::string input);
+std::string GetAndSetAttribute(std::string Attribute);
+
 int main()
 {
     int choice;
@@ -178,13 +168,11 @@ int main()
     std::string Faculty;
     int i = 0;//used to increment student array
     srand(time(0));//seed for random number that changes with time for giving unique ID
-    int random;
-
+    int random;//storing generated ID
     bool exitLoop = false;//to end program if user chooses
     std::vector<Student> student; //using vector instead of array to dynamically size it instead of having a prefixed limit of students
     Student newStudent;//create blank student object
-
-    std::vector<int> IDvector;
+    std::vector<int> IDvector;//vector to store unique IDs (for duplicate checking)
     do{
         std::cout << "\nPress 1 to register new student: \n";
         std::cout << "\nPress 2 to view student list: \n";
@@ -192,13 +180,7 @@ int main()
         std::getline(std::cin, input);
         system("CLS");//clear screen
 
-        if (input.length() == 1 && std::isdigit(input[0])) {//accept choice input iff it it only one digit
-            choice = input[0] - '0';  // Convert char to int
-        }
-        else 
-        {
-            choice = 999;//set choice to an invalid input so default case is triggered
-        }
+        choice = ValidateChoice(input);
         
         switch(choice)
         { 
@@ -206,40 +188,27 @@ int main()
                 student.push_back(newStudent);//add blank student to vector
                 do{
                     std::cout << "Enter Student Name: ";
-                    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
-                    std::getline(std::cin, Name);
-                    student[i].setName(Name);
+                    student[i].setName(GetAndSetAttribute(Name));
                 }
                 while(student[i].nameFlag == true);//if invalid, prompt again.
     
                 do{
                     std::cout << "Enter Student Surname: ";
-                    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
-                    std::getline(std::cin, Surname);
-                    student[i].setSurname(Surname);
+                    student[i].setName(GetAndSetAttribute(Surname));
                 }
                 while(student[i].surnameFlag == true);//if invalid, prompt again.
         
                 do{
                     std::cout << "Enter student Faculty: ";
-                    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
-                    std::getline(std::cin, Faculty);
-                    student[i].setFaculty(Faculty); 
+                    student[i].setName(GetAndSetAttribute(Faculty));
                 }
                 while(student[i].facultyFlag == true);//if invalid, prompt again.
 
                 std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()//display student name after registering
                           << " has been succesfuly registered!\n";
 
-            
-                //this code generates a unique ID for every new student.
                 random = 130000 + (rand() % 9999); //generate random ID in range 130000 ~ 139999
-                while(std::count(IDvector.begin(), IDvector.end(), random))//if random is duplicate in ID vector,
-                {                                                          //then generate a new ID until it is 
-                    random = 130000 + (rand() % 9999);                     //unique
-                }
-                IDvector.push_back(random);//adds ID to the vector
-                ID = std::to_string(random);//convert unique ID to a string
+                ID = std::to_string(CheckAndSetID(random, IDvector));
                 student[i].setID(ID); //set unique ID to Student
                 i++; //increment i to move to the next student in the array
 
@@ -272,3 +241,48 @@ int main()
     }while(exitLoop == false);
 }
     
+
+std::string formatString(std::string userInput, int inputLength)//function to format users input
+{
+    if(islower(userInput[0]))//capitalize first letter
+    {
+        userInput[0] = toupper(userInput[0]);
+    }
+    for(int i = 1; i < inputLength; i++)//i is 1 so it doesnt check first letter
+    {   
+        if(isupper(userInput[i]))                   //lowercase all uppercase       
+        {                                           //letters after first one
+            userInput[i] = tolower(userInput[i]);
+        }
+    }
+    return userInput;
+}
+
+int CheckAndSetID(int random, std::vector<int> IDvector)
+{
+    //this code makes sure no duplicate ID is generated
+    while(std::count(IDvector.begin(), IDvector.end(), random))//if random is duplicate in ID vector,
+    {                                                          //then generate a new ID until it is 
+        random = 130000 + (rand() % 9999);                     //unique
+    }
+    IDvector.push_back(random);//adds ID to the vector
+    return random;
+}
+
+int ValidateChoice(std::string input)
+{
+     if (input.length() == 1 && std::isdigit(input[0])) {//accept choice input only if input is one digit
+            return input[0] - '0';  // Convert char to int
+        }
+        else 
+        {
+            return 999;//set choice to an invalid input so default case is triggered
+        }
+}
+
+std::string GetAndSetAttribute(std::string Attribute)
+{
+    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
+    std::getline(std::cin, Attribute);
+    return Attribute;
+}
