@@ -3,10 +3,12 @@
 #include <string>
 #include <limits>
 #include <stdlib.h>
+#include <cstdlib>
+#include <time.h>
 
-std::string formatString(std::string userInput, int inputLength)//function to capitalize first letter if user doesn't and decapitalize subsequent letters if user does
+std::string formatString(std::string userInput, int inputLength)//function to format users input
 {
-    if(islower(userInput[0]))
+    if(islower(userInput[0]))//capitalize first letter
     {
         userInput[0] = toupper(userInput[0]);
     }
@@ -28,7 +30,7 @@ class Student{
         std::string Faculty;
 
     public:
-        //flag to check if user input is valid
+        //flags to check if user input is valid
         bool surnameFlag = false; 
         bool nameFlag = false;
         bool IDflag = false;
@@ -45,7 +47,7 @@ class Student{
             bool continueCheck = true;
             for(int i = 0; i < nameLength; i++)
             {
-                if(!isalpha(newName[i]))//if theres a number in string the input
+                if(!isalpha(newName[i]))//if theres a number in the input
                 {
                     std::cout << "Invalid input: Name must be a single word and without numbers.\n";
                     nameFlag = true;
@@ -79,7 +81,7 @@ class Student{
             bool continueCheck = true;
             for(int i = 0; i < surnameLength; i++)
             {
-                if(!isalpha(newSurname[i]))//if theres a number in string the input
+                if(!isalpha(newSurname[i]))//if theres a number in the input
                 {
                     std::cout << "Invalid input: Surname must be a single word and without numbers.\n";
                     surnameFlag = true;
@@ -117,6 +119,7 @@ class Student{
         {
             return Faculty;
         }
+        
         void setFaculty(std::string newFaculty)
         {
             int newfacultyLength = newFaculty.length(); 
@@ -158,7 +161,8 @@ class Student{
             std::cout << "Name: " << Name << "\n"
                       << "Surname: " << Surname << "\n"
                       << "ID: " << ID << "\n"
-                      << "Faculty: " << Faculty << "\n";
+                      << "Faculty: " << Faculty << "\n"
+                      << "\n*************************\n";
         }
 };
 
@@ -167,16 +171,14 @@ int main()
     int choice;
     std::string input;
     std::string Name;
-    std::string ID = "1308";
+    std::string ID;
     std::string Surname;
     std::string Faculty;
-    int i = 0;
+    int i = 0;//used to increment student array
+    srand(time(0));//seed for random number that changes with time for giving unique ID
+    int random;
 
-    std::string uniqueID;
-    char A = '0', B = '0';
-    int a, b;
-
-    bool exitLoop = false;
+    bool exitLoop = false;//to end program if user chooses
     const int maxSize = 100;
     Student student[maxSize];//max 100 students, all having blank attributes
     do{
@@ -184,7 +186,7 @@ int main()
         std::cout << "\nPress 2 to view student list: \n";
         std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
         std::getline(std::cin, input);
-        system("CLS");
+        system("CLS");//clear screen
 
         if (input.length() == 1 && std::isdigit(input[0])) {//accept choice input iff it it only one digit
             choice = input[0] - '0';  // Convert char to int
@@ -205,7 +207,6 @@ int main()
                 }
                 while(student[i].nameFlag == true);//if invalid, prompt again.
     
-
                 do{
                     std::cout << "Enter Student Surname: ";
                     std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
@@ -226,24 +227,12 @@ int main()
                           << " has been succesfuly registered!\n";
 
             
-                //this code generates a unique ID for every new student from 123000 to 123099
-                
-                uniqueID = ID + A + B;
-                student[i].setID(uniqueID); //set unique ID to Student
-
-                b = (B - '0') + 1; //turn char to int and increment
-                B = b + '0';       //set char to new incremented value    
-
-                if(b == 10)
-                {
-                    b = 0;             //reset ones place to zero
-                    B = b + '0';       //set new value
-
-                    a = (A - '0') + 1; //same thing here, but increment
-                    A = a + '0';       //every 10 ID's
-                }
-
+                //this code generates a unique ID for every new student.
+                random = 130000 + (rand() % 9999); //generate random ID in range 130000 ~ 139999
+                ID = std::to_string(random);//convert random ID to a string
+                student[i].setID(ID); //set unique ID to Student
                 i++; //increment i to move to the next student in the array
+
             break;
 
             case 2://shows list of all students
@@ -256,7 +245,6 @@ int main()
                     for(int j = 0; j<i; j++)
                     {
                         std::cout << "Student " << j + 1 << ": \n";
-                        std::cout << std::endl;
                         student[j].showStudentInfo();
                         std::cout << std::endl;
                     }
@@ -270,11 +258,7 @@ int main()
 
             default:
                 std::cout << "Invalid input, please try again.\n";
- 
         }
-
     }while(exitLoop == false);
 }
-//commit test
-    
     
