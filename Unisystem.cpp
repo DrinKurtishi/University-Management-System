@@ -160,7 +160,9 @@ class Student{
             std::cout << "Name: " << Name << "\n"
                       << "Surname: " << Surname << "\n"
                       << "ID: " << ID << "\n"
-                      << "Faculty: " << Faculty << "\n";
+                      << "Faculty: " << Faculty << "\n"
+                      << "\n*************************\n";
+
         }
 };
 
@@ -245,7 +247,6 @@ int main()
                     for(int j = 0; j<i; j++)
                     {
                         std::cout << "Student " << j + 1 << ": \n";
-                        std::cout << std::endl;
                         student[j].showStudentInfo();
                         std::cout << std::endl;
                     }
