@@ -3,6 +3,8 @@
 #include <string>
 #include <limits>
 #include <stdlib.h>
+#include <cstdlib>
+#include <time.h>
 
 std::string formatString(std::string userInput, int inputLength)//function to capitalize first letter if user doesn't and decapitalize subsequent letters if user does
 {
@@ -167,14 +169,12 @@ int main()
     int choice;
     std::string input;
     std::string Name;
-    std::string ID = "1308";
+    std::string ID;
     std::string Surname;
     std::string Faculty;
     int i = 0;
-
-    std::string uniqueID;
-    char A = '0', B = '0';
-    int a, b;
+    srand(time(0));//seed for random number that changes with time for giving unique ID
+    int random;
 
     bool exitLoop = false;
     const int maxSize = 100;
@@ -227,23 +227,12 @@ int main()
 
             
                 //this code generates a unique ID for every new student from 123000 to 123099
-                
-                uniqueID = ID + A + B;
-                student[i].setID(uniqueID); //set unique ID to Student
 
-                b = (B - '0') + 1; //turn char to int and increment
-                B = b + '0';       //set char to new incremented value    
-
-                if(b == 10)
-                {
-                    b = 0;             //reset ones place to zero
-                    B = b + '0';       //set new value
-
-                    a = (A - '0') + 1; //same thing here, but increment
-                    A = a + '0';       //every 10 ID's
-                }
-
+                random = 130000 + (rand() % 9999); //generate random ID in range 130000 ~ 139999
+                ID = std::to_string(random);//convert random ID to a string
+                student[i].setID(ID); //set unique ID to Student
                 i++; //increment i to move to the next student in the array
+
             break;
 
             case 2://shows list of all students
