@@ -22,9 +22,7 @@ class Student{
         //flags to check if user input is valid
         bool surnameFlag = false; 
         bool nameFlag = false;
-        bool IDflag = false;
-        bool facultyFlag = false;
-
+        
         //getters and setters for private variables
         std::string getName()
         {
@@ -84,24 +82,7 @@ class Student{
         
         void setFaculty(std::string newFaculty)
         {
-            int newfacultyLength = newFaculty.length(); 
-            bool print = true;
-            for(int i = 0; i < newfacultyLength; i++)
-            {
-                if(isdigit(newFaculty[i]))
-                {
-                    std::cout << "Invalid input: No numbers allowed in faculty name. \n";
-                    print = false;
-                    facultyFlag = true;
-                    break;
-                }
-            }
-            if(print == true)
-            {
-                newFaculty = formatString(newFaculty, newfacultyLength);
-                Faculty = newFaculty;
-                facultyFlag = false;
-            }
+            Faculty = newFaculty;
         }
 
         Student() //default constructor for all students
@@ -120,11 +101,11 @@ class Student{
         }
         void showStudentInfo()
         {
-            std::cout << "Name: " << Name << "\n"
-                      << "Surname: " << Surname << "\n"
-                      << "ID: " << ID << "\n"
-                      << "Faculty: " << Faculty << "\n"
-                      << "\n*************************\n";
+            std::cout 
+            << "Name: " << Name << "\n"
+            << "Surname: " << Surname << "\n"
+            << "ID: " << ID << "\n"
+            << "\n*************************\n";
         }
 };
 
@@ -174,12 +155,6 @@ int main()
                 }
                 while(student[i].surnameFlag == true);//if invalid, prompt again.
         
-                do{
-                    std::cout << "Enter student Faculty: ";
-                    student[i].setFaculty(GetAndSetAttribute(Faculty));
-                }
-                while(student[i].facultyFlag == true);//if invalid, prompt again.
-
                 std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()//display student name after registering
                           << " has been succesfuly registered!\n";
 
@@ -216,7 +191,8 @@ int main()
         }
     }while(exitLoop == false);
 }
-    
+
+//functions of student class
 
 std::string formatString(std::string userInput, int inputLength)//function to format users input
 {
@@ -233,6 +209,21 @@ std::string formatString(std::string userInput, int inputLength)//function to fo
     }
     return userInput;
 }
+
+bool validateName(std::string name) {
+    int nameLength = name.length();
+    for (int i = 0; i < nameLength; i++) {
+        if (!isalpha(name[i])) {
+            return false; // if there is a number in the input
+        }
+    }
+    if (name.find(' ') != std::string::npos) {
+        return false; // if there is more than one word in input
+    }
+    return true; // if input is valid
+}
+
+//functions of main
 
 int CheckAndSetID(int random, std::vector<int> IDvector)
 {
@@ -258,20 +249,7 @@ int ValidateChoice(std::string input)
 
 std::string GetAndSetAttribute(std::string Attribute)
 {
-    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
+    std::cin >> std::ws; // consume whitespace characters (te remove anything left in std::cin buffer that causes bugs)
     std::getline(std::cin, Attribute);
     return Attribute;
-}
-
-bool validateName(std::string name) {
-    int nameLength = name.length();
-    for (int i = 0; i < nameLength; i++) {
-        if (!isalpha(name[i])) {
-            return false; // if there is a number in the input
-        }
-    }
-    if (name.find(' ') != std::string::npos) {
-        return false; // if there is more than one word in input
-    }
-    return true; // if input is valid
 }
