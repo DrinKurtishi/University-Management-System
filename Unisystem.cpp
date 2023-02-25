@@ -9,6 +9,7 @@
 #include <algorithm>
 
 std::string formatString(std::string userInput, int inputLength);
+bool validateName(std::string name);
 
 class Student{
     private:
@@ -21,41 +22,25 @@ class Student{
         //flags to check if user input is valid
         bool surnameFlag = false; 
         bool nameFlag = false;
-        bool IDflag = false;
-        bool facultyFlag = false;
-
+        
         //getters and setters for private variables
         std::string getName()
         {
             return Name;
         }
-        void setName(std::string newName)
+        
+        void setName(std::string newName) 
         {
-            int nameLength = newName.length();
-            bool continueCheck = true;
-            for(int i = 0; i < nameLength; i++)
+            if (validateName(newName)) 
             {
-                if(!isalpha(newName[i]))//if theres a number in the input
-                {
-                    std::cout << "Invalid input: Name must be a single word and without numbers.\n";
-                    nameFlag = true;
-                    continueCheck = false;
-                    break;
-                }
-            }
-            if(continueCheck == true)
+                newName = formatString(newName, newName.length());
+                Name = newName;
+                nameFlag = false;
+            }       
+            else 
             {
-                if(newName.find(' ') != std::string::npos)//Makes input invalid if there is more than one word in input
-                {
-                    std::cout << "Invalid input: Name must be a single word and without numbers.\n";
-                    nameFlag = true;
-                }
-                else//if input is valid
-                {
-                    newName = formatString(newName, nameLength);
-                    Name = newName;
-                    nameFlag = false;
-                }
+                std::cout << "Invalid input: Name must be a single word and without numbers.\n";
+                nameFlag = true;
             }
         }
 
@@ -63,32 +48,19 @@ class Student{
         {
             return Surname;
         }
-        void setSurname(std::string newSurname)
+
+        void setSurname(std::string newSurname) 
         {
-            int surnameLength = newSurname.length();
-            bool continueCheck = true;
-            for(int i = 0; i < surnameLength; i++)
+            if (validateName(newSurname)) 
             {
-                if(!isalpha(newSurname[i]))//if theres a number in the input
-                {
-                    std::cout << "Invalid input: Surname must be a single word and without numbers.\n";
-                    surnameFlag = true;
-                    continueCheck = false;
-                    break;
-                }
-            }
-            if(continueCheck == true){
-                if(newSurname.find(' ') != std::string::npos)//Makes input invalid if there is more than one word in input
-                {//Makes input invalid if there is more than one word in input
-                    std::cout << "Invalid input: Surname must be a single word and without numbers.\n";
-                    surnameFlag = true;
-                }
-                else//if input is valid
-                {
-                    newSurname = formatString(newSurname, surnameLength);
-                    Surname = newSurname;
-                    surnameFlag = false;
-                }
+                newSurname = formatString(newSurname, newSurname.length());
+                Surname = newSurname;
+                surnameFlag = false;
+            } 
+            else 
+            {
+                std::cout << "Invalid input: Surname must be a single word and without numbers.\n";
+                surnameFlag = true;
             }
         }
 
@@ -110,24 +82,7 @@ class Student{
         
         void setFaculty(std::string newFaculty)
         {
-            int newfacultyLength = newFaculty.length(); 
-            bool print = true;
-            for(int i = 0; i < newfacultyLength; i++)
-            {
-                if(isdigit(newFaculty[i]))
-                {
-                    std::cout << "Invalid input: No numbers allowed in faculty name. \n";
-                    print = false;
-                    facultyFlag = true;
-                    break;
-                }
-            }
-            if(print == true)
-            {
-                newFaculty = formatString(newFaculty, newfacultyLength);
-                Faculty = newFaculty;
-                facultyFlag = false;
-            }
+            Faculty = newFaculty;
         }
 
         Student() //default constructor for all students
@@ -146,11 +101,11 @@ class Student{
         }
         void showStudentInfo()
         {
-            std::cout << "Name: " << Name << "\n"
-                      << "Surname: " << Surname << "\n"
-                      << "ID: " << ID << "\n"
-                      << "Faculty: " << Faculty << "\n"
-                      << "\n*************************\n";
+            std::cout 
+            << "Name: " << Name << "\n"
+            << "Surname: " << Surname << "\n"
+            << "ID: " << ID << "\n"
+            << "\n*************************\n";
         }
 };
 
@@ -187,6 +142,7 @@ int main()
         { 
             case 1://registers new student
                 student.push_back(newStudent);//add blank student to vector
+               
                 do{
                     std::cout << "Enter Student Name: ";
                     student[i].setName(GetAndSetAttribute(Name));
@@ -199,17 +155,11 @@ int main()
                 }
                 while(student[i].surnameFlag == true);//if invalid, prompt again.
         
-                do{
-                    std::cout << "Enter student Faculty: ";
-                    student[i].setFaculty(GetAndSetAttribute(Faculty));
-                }
-                while(student[i].facultyFlag == true);//if invalid, prompt again.
-
                 std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()//display student name after registering
                           << " has been succesfuly registered!\n";
 
                 random = 130000 + (rand() % 9999); //generate random ID in range 130000 ~ 139999
-                ID = std::to_string(CheckAndSetID(random, IDvector));
+                ID = std::to_string(CheckAndSetID(random, IDvector));//validate ID so no duplicates are registered
                 student[i].setID(ID); //set unique ID to Student
                 i++; //increment i to move to the next student in the array
 
@@ -222,7 +172,7 @@ int main()
                 }
                 else
                 {
-                    for(int j = 0; j<i; j++)
+                    for(int j = 0; j < i; j++)
                     {
                         std::cout << "Student " << j + 1 << ": \n";
                         student[j].showStudentInfo();
@@ -241,7 +191,8 @@ int main()
         }
     }while(exitLoop == false);
 }
-    
+
+//functions of student class
 
 std::string formatString(std::string userInput, int inputLength)//function to format users input
 {
@@ -259,6 +210,21 @@ std::string formatString(std::string userInput, int inputLength)//function to fo
     return userInput;
 }
 
+bool validateName(std::string name) {
+    int nameLength = name.length();
+    for (int i = 0; i < nameLength; i++) {
+        if (!isalpha(name[i])) {
+            return false; // if there is a number in the input
+        }
+    }
+    if (name.find(' ') != std::string::npos) {
+        return false; // if there is more than one word in input
+    }
+    return true; // if input is valid
+}
+
+//functions of main
+
 int CheckAndSetID(int random, std::vector<int> IDvector)
 {
     //this code makes sure no duplicate ID is generated
@@ -266,7 +232,7 @@ int CheckAndSetID(int random, std::vector<int> IDvector)
     {                                                          //then generate a new ID until it is 
         random = 130000 + (rand() % 9999);                     //unique
     }
-    IDvector.push_back(random);//adds ID to the vector
+    IDvector.push_back(random);//adds ID to the IDvector
     return random;
 }
 
@@ -283,7 +249,7 @@ int ValidateChoice(std::string input)
 
 std::string GetAndSetAttribute(std::string Attribute)
 {
-    std::cin >> std::ws; // consume whitespace characters (to prevent newline character from getline)
+    std::cin >> std::ws; // consume whitespace characters (te remove anything left in std::cin buffer that causes bugs)
     std::getline(std::cin, Attribute);
     return Attribute;
 }
