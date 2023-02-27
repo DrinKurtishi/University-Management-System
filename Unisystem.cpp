@@ -10,6 +10,10 @@
 
 std::string formatString(std::string userInput, int inputLength);
 bool validateName(std::string name);
+int CheckAndSetID(int random, std::vector<int> IDvector);
+int ValidateChoice(std::string input);
+std::string GetAndSetAttribute(std::string Attribute);
+int IDgenerator();
 
 class Student{
     private:
@@ -109,12 +113,6 @@ class Student{
         }
 };
 
-//functions for main function
-int CheckAndSetID(int random, std::vector<int> IDvector);
-int ValidateChoice(std::string input);
-std::string GetAndSetAttribute(std::string Attribute);
-int IDgenerator();
-
 int main()
 {
     int choice;
@@ -130,6 +128,7 @@ int main()
     std::vector<Student> student; //using vector instead of array to dynamically size it instead of having a prefixed limit of students
     Student newStudent;//create blank student object
     std::vector<int> IDvector;//vector to store unique IDs (for duplicate checking)
+
     do{
         std::cout << "\nPress 1 to register new student: \n";
         std::cout << "\nPress 2 to view student list: \n";
@@ -144,13 +143,15 @@ int main()
             case 1://registers new student
                 student.push_back(newStudent);//add blank student to vector
                
-                do{
+                do
+                {
                     std::cout << "Enter Student Name: ";
                     student[i].setName(GetAndSetAttribute(Name));
                 }
                 while(student[i].nameFlag == true);//if invalid, prompt again.
     
-                do{
+                do
+                {
                     std::cout << "Enter Student Surname: ";
                     student[i].setSurname(GetAndSetAttribute(Surname));
                 }
@@ -163,7 +164,6 @@ int main()
                 ID = std::to_string(CheckAndSetID(random, IDvector));//validate ID so no duplicates are registered
                 student[i].setID(ID); //set unique ID to Student
                 i++; //increment i to move to the next student in the array
-
             break;
 
             case 2://shows list of all students
@@ -211,14 +211,18 @@ std::string formatString(std::string userInput, int inputLength)//function to fo
     return userInput;
 }
 
-bool validateName(std::string name) {
+bool validateName(std::string name) 
+{
     int nameLength = name.length();
-    for (int i = 0; i < nameLength; i++) {
-        if (!isalpha(name[i])) {
+    for (int i = 0; i < nameLength; i++) 
+    {
+        if (!isalpha(name[i])) 
+        {
             return false; // if there is a number in the input
         }
     }
-    if (name.find(' ') != std::string::npos) {
+    if (name.find(' ') != std::string::npos) 
+    {
         return false; // if there is more than one word in input
     }
     return true; // if input is valid
@@ -231,7 +235,7 @@ int CheckAndSetID(int random, std::vector<int> IDvector)
     //this code makes sure no duplicate ID is generated
     while(std::count(IDvector.begin(), IDvector.end(), random))//if random is duplicate in ID vector,
     {                                                          //then generate a new ID until it is 
-        random = IDgenerator();                     //unique
+        random = IDgenerator();                                //unique
     }
     IDvector.push_back(random);//adds ID to the IDvector
     return random;
@@ -239,7 +243,8 @@ int CheckAndSetID(int random, std::vector<int> IDvector)
 
 int ValidateChoice(std::string input)
 {
-     if (input.length() == 1 && std::isdigit(input[0])) {//accept choice input only if input is one digit
+     if (input.length() == 1 && std::isdigit(input[0])) //accept choice input only if input is one digit
+        {
             return input[0] - '0';  // Convert char to int
         }
         else 
