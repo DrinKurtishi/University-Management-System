@@ -113,6 +113,7 @@ class Student{
 int CheckAndSetID(int random, std::vector<int> IDvector);
 int ValidateChoice(std::string input);
 std::string GetAndSetAttribute(std::string Attribute);
+int IDgenerator();
 
 int main()
 {
@@ -158,7 +159,7 @@ int main()
                 std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()//display student name after registering
                           << " has been succesfuly registered!\n";
 
-                random = 130000 + (rand() % 9999); //generate random ID in range 130000 ~ 139999
+                random = IDgenerator(); //generate random ID in range 130000 ~ 139999
                 ID = std::to_string(CheckAndSetID(random, IDvector));//validate ID so no duplicates are registered
                 student[i].setID(ID); //set unique ID to Student
                 i++; //increment i to move to the next student in the array
@@ -230,7 +231,7 @@ int CheckAndSetID(int random, std::vector<int> IDvector)
     //this code makes sure no duplicate ID is generated
     while(std::count(IDvector.begin(), IDvector.end(), random))//if random is duplicate in ID vector,
     {                                                          //then generate a new ID until it is 
-        random = 130000 + (rand() % 9999);                     //unique
+        random = IDgenerator();                     //unique
     }
     IDvector.push_back(random);//adds ID to the IDvector
     return random;
@@ -252,4 +253,9 @@ std::string GetAndSetAttribute(std::string Attribute)
     std::cin >> std::ws; // consume whitespace characters (te remove anything left in std::cin buffer that causes bugs)
     std::getline(std::cin, Attribute);
     return Attribute;
+}
+int IDgenerator()
+{
+    int n = 130000 + (rand() % 9999);
+    return n;
 }
