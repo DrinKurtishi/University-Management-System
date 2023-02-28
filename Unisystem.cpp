@@ -8,11 +8,11 @@
 #include <vector>
 #include <algorithm>
 
-std::string formatString(std::string userInput, int inputLength);
-bool validateName(std::string name);
-int CheckAndSetID(int random, std::vector<int> IDvector);
-int ValidateChoice(std::string input);
-std::string GetAndSetAttribute(std::string Attribute);
+std::string formatString(std::string, int);
+bool validateAttribute(std::string);
+int CheckAndSetID(int, std::vector<int>);
+int ValidateChoice(std::string);
+std::string GetAndSetAttribute(std::string);
 int IDgenerator();
 
 class Student{
@@ -35,7 +35,7 @@ class Student{
         
         void setName(std::string newName) 
         {
-            if (validateName(newName)) 
+            if (validateAttribute(newName)) 
             {
                 newName = formatString(newName, newName.length());
                 Name = newName;
@@ -43,7 +43,7 @@ class Student{
             }       
             else 
             {
-                std::cout << "Invalid input: Name must be a single word and without numbers.\n";
+                std::cout << "Invalid input: Name must contain a single word, without numbers and less than 15 characters.\n";
                 nameFlag = true;
             }
         }
@@ -55,7 +55,7 @@ class Student{
 
         void setSurname(std::string newSurname) 
         {
-            if (validateName(newSurname)) 
+            if (validateAttribute(newSurname)) 
             {
                 newSurname = formatString(newSurname, newSurname.length());
                 Surname = newSurname;
@@ -63,7 +63,7 @@ class Student{
             } 
             else 
             {
-                std::cout << "Invalid input: Surname must be a single word and without numbers.\n";
+                std::cout << "Invalid input: Surname must contain a single word, without numbers and less than 15 characters.\n";
                 surnameFlag = true;
             }
         }
@@ -77,8 +77,7 @@ class Student{
         {
             ID = newID;
         }
-        
-        
+         
         std::string getFaculty()
         {
             return Faculty;
@@ -96,6 +95,7 @@ class Student{
             ID = "blank";
             Faculty = "blank";
         }
+
         Student(std::string name, std::string surname, std::string id, std::string faculty) //constructor
         {
             Name = name;
@@ -103,6 +103,7 @@ class Student{
             ID = id;
             Faculty = faculty;
         }
+
         void showStudentInfo()
         {
             std::cout 
@@ -127,7 +128,7 @@ int main()
     bool exitLoop = false;//to end program if user chooses
     std::vector<Student> student; //using vector instead of array to dynamically size it instead of having a prefixed limit of students
     Student newStudent;//create blank student object
-    std::vector<int> IDvector;//vector to store unique IDs (for duplicate checking)
+    std::vector<int> IDvector;//vector to store unique IDs (to check for potential duplicates)
 
     do{
         std::cout << "\nPress 1 to register new student: \n";
@@ -211,17 +212,21 @@ std::string formatString(std::string userInput, int inputLength)//function to fo
     return userInput;
 }
 
-bool validateName(std::string name) 
+bool validateAttribute(std::string attribute) 
 {
-    int nameLength = name.length();
+    int nameLength = attribute.length();
     for (int i = 0; i < nameLength; i++) 
     {
-        if (!isalpha(name[i])) 
+        if (!isalpha(attribute[i])) 
         {
             return false; // if there is a number in the input
         }
     }
-    if (name.find(' ') != std::string::npos) 
+    if(attribute.length() >= 10)
+    {
+        return false;
+    }
+    if (attribute.find(' ') != std::string::npos) 
     {
         return false; // if there is more than one word in input
     }
@@ -244,13 +249,13 @@ int CheckAndSetID(int random, std::vector<int> IDvector)
 int ValidateChoice(std::string input)
 {
      if (input.length() == 1 && std::isdigit(input[0])) //accept choice input only if input is one digit
-        {
-            return input[0] - '0';  // Convert char to int
-        }
-        else 
-        {
-            return 999;//set choice to an invalid input so default case is triggered
-        }
+    {
+        return input[0] - '0';  // Convert char to int
+    }
+    else 
+    {
+        return 999;//set choice to an invalid input so default case is triggered
+    }
 }
 
 std::string GetAndSetAttribute(std::string Attribute)
@@ -259,6 +264,7 @@ std::string GetAndSetAttribute(std::string Attribute)
     std::getline(std::cin, Attribute);
     return Attribute;
 }
+
 int IDgenerator()
 {
     int n = 130000 + (rand() % 9999);
