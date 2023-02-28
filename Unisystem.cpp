@@ -14,6 +14,10 @@ int CheckAndSetID(int, std::vector<int>);
 int ValidateChoice(std::string);
 std::string GetAndSetAttribute(std::string);
 int IDgenerator();
+std::string ChooseFaculty(std::string facultyInput);
+
+
+
 
 class Student{
     private:
@@ -110,6 +114,7 @@ class Student{
             << "Name: " << Name << "\n"
             << "Surname: " << Surname << "\n"
             << "ID: " << ID << "\n"
+            << "Faculty: " << Faculty << "\n"
             << "\n*************************\n";
         }
 };
@@ -130,6 +135,8 @@ int main()
     Student newStudent;//create blank student object
     std::vector<int> IDvector;//vector to store unique IDs (to check for potential duplicates)
 
+    std::string facultyInput;
+
     do{
         std::cout << "\nPress 1 to register new student: \n";
         std::cout << "\nPress 2 to view student list: \n";
@@ -143,7 +150,9 @@ int main()
         { 
             case 1://registers new student
                 student.push_back(newStudent);//add blank student to vector
-               
+                
+                student[i].setFaculty(ChooseFaculty(facultyInput));
+
                 do
                 {
                     std::cout << "Enter Student Name: ";
@@ -254,7 +263,7 @@ int ValidateChoice(std::string input)
     }
     else 
     {
-        return 999;//set choice to an invalid input so default case is triggered
+        return 999;//set choice to an invalid input so default case is triggered(invalid)
     }
 }
 
@@ -269,4 +278,55 @@ int IDgenerator()
 {
     int n = 130000 + (rand() % 9999);
     return n;
+}
+
+std::string ChooseFaculty(std::string facultyInput)//switch case for choosing faculty of student
+{
+    std::string faculty;
+    int facultyChoice;
+    bool exitFacultyLoop = false;
+    do
+    {
+            
+        std::cout << "Please choose faculty of student:\n"
+                  << "Press 1 for Computer science\n"
+                  << "Press 2 for Business economy\n"
+                  << "Press 3 for Law\n"
+                  << "Press 4 for Languages\n";
+
+        std::getline(std::cin, facultyInput);
+        system("CLS");
+        facultyChoice = ValidateChoice(facultyInput);
+
+        switch(facultyChoice)
+        {
+            case 1:
+                std::cout << "You have selected the faculty of Computer sciences!\n";
+                faculty = "Computer sciences";
+                exitFacultyLoop = true;
+            break;
+                        
+            case 2:
+                std::cout << "You have selected the faculty of Business economics!\n";
+                faculty = "Business economics";
+                exitFacultyLoop = true;
+            break;
+
+            case 3:
+                std::cout << "You have selected the faculty of Law!\n";
+                faculty = "Law";
+                exitFacultyLoop = true;
+            break;
+
+            case 4:
+                std::cout << "You have selected the faculty of Languages!\n";
+                faculty = "Languages";
+                exitFacultyLoop = true;
+            break;
+
+            default:
+                std::cout << "Invalid input, please try again\n";
+        }
+    }while(exitFacultyLoop == false);
+    return faculty;
 }
