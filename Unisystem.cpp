@@ -119,6 +119,9 @@ class Student{
         }
 };
 
+
+void chooseFacultyList(std::vector<Student>, std::vector<Student>, std::vector<Student>, std::vector<Student>, int, int, int, int);
+
 int main()
 {
     int choice;
@@ -139,6 +142,8 @@ int main()
     std::vector<Student> BEstudent;//vector for business economics students
     std::vector<Student> LWstudent;//vector for law students
     std::vector<Student> LNstudent;//vector for language students
+
+    //number of students of specific faculties
     int CSnumber = 0;
     int BEnumber = 0;
     int LWnumber = 0;
@@ -146,8 +151,9 @@ int main()
 
     do{
         std::cout << "\nPress 1 to register new student: \n";
-        std::cout << "\nPress 2 to view student list: \n";
-        std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
+        std::cout << "\nPress 2 to view every student list: \n";
+        std::cout << "\nPress 3 to view student list of a specific faculty:\n";
+        std::cout << "\nPress 4 to end program(WARNING! This will erase your entire database)\n";
         std::getline(std::cin, input);
         system("CLS");//clear screen
 
@@ -219,34 +225,14 @@ int main()
                         std::cout << "Student " << j + 1 << ": \n";
                         student[j].showStudentInfo();
                     }
-                    for(int j = 0; j < CSnumber; j++)
-                    {
-                        std::cout << "COMPUTER SCIENCE STUDENTS:\n";
-                        CSstudent[j].showStudentInfo();
-                        std::cout << "\n";
-                    }
-                    for(int j = 0; j < BEnumber; j++)
-                    {
-                          std::cout << "BUSINESS STUDENTS:\n";
-                        BEstudent[j].showStudentInfo();
-                        std::cout << "\n";
-                    }
-                    for(int j = 0; j < LWnumber; j++)
-                    {
-                        std::cout << "LAW STUDENTS:\n";
-                        LWstudent[j].showStudentInfo();
-                        std::cout << "\n";
-                    }
-                    for(int j = 0; j < LNnumber; j++)
-                    {
-                        std::cout << "LANGUAGE STUDENTS:\n";
-                        LNstudent[j].showStudentInfo();
-                        std::cout << "\n";
-                    }
                 }
             break; 
 
-            case 3://Ends program
+            case 3:
+                chooseFacultyList(CSstudent, BEstudent, LWstudent, LNstudent, CSnumber, BEnumber, LWnumber, LNnumber);//chose student list of specific faculty
+            break;
+
+            case 4://Ends program
                 std::cout<< "Terminating program.. Thank you for using UniSystem!\n";
                 exitLoop = true;
             break; 
@@ -383,4 +369,103 @@ std::string ChooseFaculty()//switch case for choosing faculty of student
         }
     }while(exitFacultyLoop == false);
     return faculty;
+}
+
+void chooseFacultyList(std::vector<Student> CSstudent, std::vector<Student> BEstudent, std::vector<Student> LWstudent, std::vector<Student> LNstudent,
+                       int CSnumber, int BEnumber, int LWnumber, int LNnumber)
+{
+    bool exitLoop = false;
+    std::string input;
+    int choice;
+    std::cout << "You have chosen to view a list of students from a specific faculty\n";
+    do 
+    {
+        std::cout << "Press 1 to view list of Computer science students:\n";
+        std::cout << "Press 2 to view list of Business economics students:\n";
+        std::cout << "Press 3 to view list of Law students:\n";
+        std::cout << "Press 4 to view list of Language students:\n";
+        std::cout << "Press 5 to go back to main menu:\n";
+
+        std::getline(std::cin, input);
+        system("CLS");
+        choice = ValidateChoice(input);
+
+        switch(choice)
+        {
+            case 1:
+                if(CSnumber != 0)
+                {
+                    std::cout << "You have chosen to view the list of Computer science students!:\n";
+                    for(int j = 0; j < CSnumber; j++)
+                    {
+                        CSstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                }
+                else
+                {
+                    std::cout << "Please enter at least one Computer science student.\n";
+                }
+               
+            break;
+
+            case 2:
+                if(BEnumber != 0)
+                {
+                    std::cout << "You have chosen to view the list of Business economics students\n";
+                    for(int j = 0; j < BEnumber; j++)
+                    {
+                        BEstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                }
+                else
+                {
+                     std::cout << "Please enter at least one Business economics student.\n";
+                }
+               
+            break;
+
+            case 3:
+                if(LWnumber != 0)
+                {
+                    std::cout << "You have chosen to view the list of Law students\n";
+                    for(int j = 0; j < LWnumber; j++)
+                    {
+                        LWstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                }
+                else
+                {
+                    std::cout << "Please enter at least one Law student.\n";
+                }
+               
+            break;
+
+            case 4:
+                if(LNnumber != 0)
+                {
+                    std::cout << "You have chosen to view the list of Language students\n";
+                    for(int j = 0; j < LNnumber; j++)
+                    {
+                        LNstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                }
+                else
+                {
+                    std::cout << "Please enter at least one Language student.\n";
+                }
+                
+            break;
+
+            case 5:
+                exitLoop = true;
+            break;
+
+            default:
+                std::cout << "Invalid input, please try again.\n";
+        }
+    }while (exitLoop == false);
 }
