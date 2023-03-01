@@ -14,7 +14,7 @@ int CheckAndSetID(int, std::vector<int>);
 int ValidateChoice(std::string);
 std::string GetAndSetAttribute(std::string);
 int IDgenerator();
-std::string ChooseFaculty(std::string facultyInput);
+std::string ChooseFaculty();
 
 
 
@@ -135,8 +135,6 @@ int main()
     Student newStudent;//create blank student object
     std::vector<int> IDvector;//vector to store unique IDs (to check for potential duplicates)
 
-    std::string facultyInput;
-
     do{
         std::cout << "\nPress 1 to register new student: \n";
         std::cout << "\nPress 2 to view student list: \n";
@@ -151,7 +149,7 @@ int main()
             case 1://registers new student
                 student.push_back(newStudent);//add blank student to vector
                 
-                student[i].setFaculty(ChooseFaculty(facultyInput));
+                student[i].setFaculty(ChooseFaculty());
 
                 do
                 {
@@ -257,7 +255,7 @@ int CheckAndSetID(int random, std::vector<int> IDvector)
 
 int ValidateChoice(std::string input)
 {
-     if (input.length() == 1 && std::isdigit(input[0])) //accept choice input only if input is one digit
+    if (input.length() == 1 && std::isdigit(input[0])) //accept choice input only if input is one digit
     {
         return input[0] - '0';  // Convert char to int
     }
@@ -280,7 +278,7 @@ int IDgenerator()
     return n;
 }
 
-std::string ChooseFaculty(std::string facultyInput)//switch case for choosing faculty of student
+std::string ChooseFaculty()//switch case for choosing faculty of student
 {
     std::string faculty;
     int facultyChoice;
@@ -294,9 +292,9 @@ std::string ChooseFaculty(std::string facultyInput)//switch case for choosing fa
                   << "Press 3 for Law\n"
                   << "Press 4 for Languages\n";
 
-        std::getline(std::cin, facultyInput);
+        std::getline(std::cin, faculty);
         system("CLS");
-        facultyChoice = ValidateChoice(facultyInput);
+        facultyChoice = ValidateChoice(faculty);
 
         switch(facultyChoice)
         {
