@@ -14,7 +14,7 @@ int CheckAndSetID(int, std::vector<int>);
 int ValidateChoice(std::string);
 std::string GetAndSetAttribute(std::string);
 int IDgenerator();
-std::string ChooseFaculty(std::string facultyInput);
+std::string ChooseFaculty();
 
 
 
@@ -119,6 +119,9 @@ class Student{
         }
 };
 
+
+void chooseFacultyList(std::vector<Student>, std::vector<Student>, std::vector<Student>, std::vector<Student>, int, int, int, int);
+
 int main()
 {
     int choice;
@@ -135,12 +138,22 @@ int main()
     Student newStudent;//create blank student object
     std::vector<int> IDvector;//vector to store unique IDs (to check for potential duplicates)
 
-    std::string facultyInput;
+    std::vector<Student> CSstudent;//vector to store only cs students for display
+    std::vector<Student> BEstudent;//vector for business economics students
+    std::vector<Student> LWstudent;//vector for law students
+    std::vector<Student> LNstudent;//vector for language students
+
+    //number of students of specific faculties
+    int CSnumber = 0;
+    int BEnumber = 0;
+    int LWnumber = 0;
+    int LNnumber = 0;
 
     do{
         std::cout << "\nPress 1 to register new student: \n";
-        std::cout << "\nPress 2 to view student list: \n";
-        std::cout << "\nPress 3 to end program(WARNING! This will erase your entire database)\n";
+        std::cout << "\nPress 2 to view every student list: \n";
+        std::cout << "\nPress 3 to view student list of a specific faculty:\n";
+        std::cout << "\nPress 4 to end program(WARNING! This will erase your entire database)\n";
         std::getline(std::cin, input);
         system("CLS");//clear screen
 
@@ -151,7 +164,7 @@ int main()
             case 1://registers new student
                 student.push_back(newStudent);//add blank student to vector
                 
-                student[i].setFaculty(ChooseFaculty(facultyInput));
+                student[i].setFaculty(ChooseFaculty());
 
                 do
                 {
@@ -173,6 +186,30 @@ int main()
                 random = IDgenerator(); //generate random ID in range 130000 ~ 139999
                 ID = std::to_string(CheckAndSetID(random, IDvector));//validate ID so no duplicates are registered
                 student[i].setID(ID); //set unique ID to Student
+
+                //choose in which faculty vector to put student
+                Faculty = student[i].getFaculty();
+                if(Faculty == "Computer sciences")
+                {
+                    CSstudent.push_back(student[i]);
+                    CSnumber++;//count number of students in faculty
+                }
+                else if(Faculty == "Business economics")
+                {
+                    BEstudent.push_back(student[i]);
+                    BEnumber++;
+                }
+                else if(Faculty == "Law")
+                {
+                    LWstudent.push_back(student[i]);
+                    LWnumber++;
+                }
+                else
+                {
+                    LNstudent.push_back(student[i]);
+                    LNnumber++;
+                }
+
                 i++; //increment i to move to the next student in the array
             break;
 
@@ -187,12 +224,15 @@ int main()
                     {
                         std::cout << "Student " << j + 1 << ": \n";
                         student[j].showStudentInfo();
-                        std::cout << std::endl;
                     }
                 }
             break; 
 
-            case 3://Ends program
+            case 3:
+                chooseFacultyList(CSstudent, BEstudent, LWstudent, LNstudent, CSnumber, BEnumber, LWnumber, LNnumber);//chose student list of specific faculty
+            break;
+
+            case 4://Ends program
                 std::cout<< "Terminating program.. Thank you for using UniSystem!\n";
                 exitLoop = true;
             break; 
@@ -257,7 +297,7 @@ int CheckAndSetID(int random, std::vector<int> IDvector)
 
 int ValidateChoice(std::string input)
 {
-     if (input.length() == 1 && std::isdigit(input[0])) //accept choice input only if input is one digit
+    if (input.length() == 1 && std::isdigit(input[0])) //accept choice input only if input is one digit
     {
         return input[0] - '0';  // Convert char to int
     }
@@ -280,7 +320,7 @@ int IDgenerator()
     return n;
 }
 
-std::string ChooseFaculty(std::string facultyInput)//switch case for choosing faculty of student
+std::string ChooseFaculty()//switch case for choosing faculty of student
 {
     std::string faculty;
     int facultyChoice;
@@ -294,9 +334,9 @@ std::string ChooseFaculty(std::string facultyInput)//switch case for choosing fa
                   << "Press 3 for Law\n"
                   << "Press 4 for Languages\n";
 
-        std::getline(std::cin, facultyInput);
+        std::getline(std::cin, faculty);
         system("CLS");
-        facultyChoice = ValidateChoice(facultyInput);
+        facultyChoice = ValidateChoice(faculty);
 
         switch(facultyChoice)
         {
@@ -329,4 +369,103 @@ std::string ChooseFaculty(std::string facultyInput)//switch case for choosing fa
         }
     }while(exitFacultyLoop == false);
     return faculty;
+}
+
+void chooseFacultyList(std::vector<Student> CSstudent, std::vector<Student> BEstudent, std::vector<Student> LWstudent, std::vector<Student> LNstudent,
+                       int CSnumber, int BEnumber, int LWnumber, int LNnumber)
+{
+    bool exitLoop = false;
+    std::string input;
+    int choice;
+    std::cout << "You have chosen to view a list of students from a specific faculty\n";
+    do 
+    {
+        std::cout << "Press 1 to view list of Computer science students:\n";
+        std::cout << "Press 2 to view list of Business economics students:\n";
+        std::cout << "Press 3 to view list of Law students:\n";
+        std::cout << "Press 4 to view list of Language students:\n";
+        std::cout << "Press 5 to go back to main menu:\n";
+
+        std::getline(std::cin, input);
+        system("CLS");
+        choice = ValidateChoice(input);
+
+        switch(choice)
+        {
+            case 1:
+                if(CSnumber != 0)
+                {
+                    std::cout << "You have chosen to view the list of Computer science students!:\n";
+                    for(int j = 0; j < CSnumber; j++)
+                    {
+                        CSstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                }
+                else
+                {
+                    std::cout << "Please enter at least one Computer science student.\n";
+                }
+               
+            break;
+
+            case 2:
+                if(BEnumber != 0)
+                {
+                    std::cout << "You have chosen to view the list of Business economics students\n";
+                    for(int j = 0; j < BEnumber; j++)
+                    {
+                        BEstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                }
+                else
+                {
+                     std::cout << "Please enter at least one Business economics student.\n";
+                }
+               
+            break;
+
+            case 3:
+                if(LWnumber != 0)
+                {
+                    std::cout << "You have chosen to view the list of Law students\n";
+                    for(int j = 0; j < LWnumber; j++)
+                    {
+                        LWstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                }
+                else
+                {
+                    std::cout << "Please enter at least one Law student.\n";
+                }
+               
+            break;
+
+            case 4:
+                if(LNnumber != 0)
+                {
+                    std::cout << "You have chosen to view the list of Language students\n";
+                    for(int j = 0; j < LNnumber; j++)
+                    {
+                        LNstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                }
+                else
+                {
+                    std::cout << "Please enter at least one Language student.\n";
+                }
+                
+            break;
+
+            case 5:
+                exitLoop = true;
+            break;
+
+            default:
+                std::cout << "Invalid input, please try again.\n";
+        }
+    }while (exitLoop == false);
 }
