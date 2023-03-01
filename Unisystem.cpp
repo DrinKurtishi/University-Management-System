@@ -135,6 +135,15 @@ int main()
     Student newStudent;//create blank student object
     std::vector<int> IDvector;//vector to store unique IDs (to check for potential duplicates)
 
+    std::vector<Student> CSstudent;//vector to store only cs students for display
+    std::vector<Student> BEstudent;//vector for business economics students
+    std::vector<Student> LWstudent;//vector for law students
+    std::vector<Student> LNstudent;//vector for language students
+    int CSnumber = 0;
+    int BEnumber = 0;
+    int LWnumber = 0;
+    int LNnumber = 0;
+
     do{
         std::cout << "\nPress 1 to register new student: \n";
         std::cout << "\nPress 2 to view student list: \n";
@@ -171,6 +180,30 @@ int main()
                 random = IDgenerator(); //generate random ID in range 130000 ~ 139999
                 ID = std::to_string(CheckAndSetID(random, IDvector));//validate ID so no duplicates are registered
                 student[i].setID(ID); //set unique ID to Student
+
+                //choose in which faculty vector to put student
+                Faculty = student[i].getFaculty();
+                if(Faculty == "Computer sciences")
+                {
+                    CSstudent.push_back(student[i]);
+                    CSnumber++;//count number of students in faculty
+                }
+                else if(Faculty == "Business economics")
+                {
+                    BEstudent.push_back(student[i]);
+                    BEnumber++;
+                }
+                else if(Faculty == "Law")
+                {
+                    LWstudent.push_back(student[i]);
+                    LWnumber++;
+                }
+                else
+                {
+                    LNstudent.push_back(student[i]);
+                    LNnumber++;
+                }
+
                 i++; //increment i to move to the next student in the array
             break;
 
@@ -185,7 +218,30 @@ int main()
                     {
                         std::cout << "Student " << j + 1 << ": \n";
                         student[j].showStudentInfo();
-                        std::cout << std::endl;
+                    }
+                    for(int j = 0; j < CSnumber; j++)
+                    {
+                        std::cout << "COMPUTER SCIENCE STUDENTS:\n";
+                        CSstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                    for(int j = 0; j < BEnumber; j++)
+                    {
+                          std::cout << "BUSINESS STUDENTS:\n";
+                        BEstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                    for(int j = 0; j < LWnumber; j++)
+                    {
+                        std::cout << "LAW STUDENTS:\n";
+                        LWstudent[j].showStudentInfo();
+                        std::cout << "\n";
+                    }
+                    for(int j = 0; j < LNnumber; j++)
+                    {
+                        std::cout << "LANGUAGE STUDENTS:\n";
+                        LNstudent[j].showStudentInfo();
+                        std::cout << "\n";
                     }
                 }
             break; 
