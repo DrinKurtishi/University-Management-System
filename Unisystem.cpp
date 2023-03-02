@@ -7,6 +7,7 @@
 #include <time.h>
 #include <vector>
 #include <algorithm>
+#include <Windows.h>
 
 std::string formatString(std::string, int);
 bool validateAttribute(std::string);
@@ -15,6 +16,7 @@ int ValidateChoice(std::string);
 std::string GetAndSetAttribute(std::string);
 int IDgenerator();
 std::string ChooseFaculty();
+void EndingProgramText(int);
 
 
 
@@ -117,6 +119,14 @@ class Student{
             << "Faculty: " << Faculty << "\n"
             << "\n*************************\n";
         }
+        void showStudentInfoFaculty()//used when displaying students of the same faculty (we dont need their faculty because we know it)
+        {
+            std::cout 
+            << "Name: " << Name << "\n"
+            << "Surname: " << Surname << "\n"
+            << "ID: " << ID << "\n"
+            << "\n*************************\n";
+        }
 };
 
 
@@ -130,9 +140,7 @@ int main()
     std::string ID;
     std::string Surname;
     std::string Faculty;
-    int i = 0;//used to increment student array
     srand(time(0));//seed for random number that changes with time for giving unique ID
-    int random;//storing generated ID
     bool exitLoop = false;//to end program if user chooses
     std::vector<Student> student; //using vector instead of array to dynamically size it instead of having a prefixed limit of students
     Student newStudent;//create blank student object
@@ -143,11 +151,12 @@ int main()
     std::vector<Student> LWstudent;//vector for law students
     std::vector<Student> LNstudent;//vector for language students
 
-    //number of students of specific faculties
-    int CSnumber = 0;
-    int BEnumber = 0;
-    int LWnumber = 0;
-    int LNnumber = 0;
+    //keeping track of the number of students of specific faculties
+    int i = 0;//used to increment student array/ nr of all students
+    int CSnumber = 0; //nr of Cs students
+    int BEnumber = 0; //nr of BE students
+    int LWnumber = 0; //nr of Law students
+    int LNnumber = 0; //nr of Language students
 
     do{
         std::cout << "\nPress 1 to register new student: \n";
@@ -183,57 +192,61 @@ int main()
                 std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()//display student name after registering
                           << " has been succesfuly registered!\n";
 
-                random = IDgenerator(); //generate random ID in range 130000 ~ 139999
-                ID = std::to_string(CheckAndSetID(random, IDvector));//validate ID so no duplicates are registered
+                ID = std::to_string(CheckAndSetID(IDgenerator(), IDvector));//generate and validate ID so no duplicates are registered
                 student[i].setID(ID); //set unique ID to Student
+
+                //SORT MAIN STUDENT ARRAY
 
                 //choose in which faculty vector to put student
                 Faculty = student[i].getFaculty();
                 if(Faculty == "Computer sciences")
                 {
                     CSstudent.push_back(student[i]);
+                    //SORT STUDENT ARRAY
                     CSnumber++;//count number of students in faculty
                 }
                 else if(Faculty == "Business economics")
                 {
                     BEstudent.push_back(student[i]);
+                    //SORT STUDENT ARRAY
                     BEnumber++;
                 }
                 else if(Faculty == "Law")
                 {
                     LWstudent.push_back(student[i]);
+                    //SORT STUDENT ARRAY
                     LWnumber++;
                 }
                 else
                 {
                     LNstudent.push_back(student[i]);
+                    //SORT STUDENT ARRAY
                     LNnumber++;
                 }
-
                 i++; //increment i to move to the next student in the array
             break;
 
             case 2://shows list of all students
-                if(i == 0)//if user chooses case 2 before registering any students execute this
-                {
-                    std::cout << "Please enter at least one student.\n";
-                }
-                else
+                if(i != 0)
                 {
                     for(int j = 0; j < i; j++)
                     {
                         std::cout << "Student " << j + 1 << ": \n";
                         student[j].showStudentInfo();
-                    }
+                    }   
+                }
+                else//if user chooses case 2 before registering any students execute this
+                {
+                   std::cout << "Please enter at least one student.\n";
                 }
             break; 
 
             case 3:
-                chooseFacultyList(CSstudent, BEstudent, LWstudent, LNstudent, CSnumber, BEnumber, LWnumber, LNnumber);//chose student list of specific faculty
+                chooseFacultyList(CSstudent, BEstudent, LWstudent, LNstudent, CSnumber, BEnumber, LWnumber, LNnumber);//show student list of specific faculty
             break;
 
             case 4://Ends program
-                std::cout<< "Terminating program.. Thank you for using UniSystem!\n";
+                EndingProgramText(i);  
                 exitLoop = true;
             break; 
 
@@ -371,8 +384,7 @@ std::string ChooseFaculty()//switch case for choosing faculty of student
     return faculty;
 }
 
-void chooseFacultyList(std::vector<Student> CSstudent, std::vector<Student> BEstudent, std::vector<Student> LWstudent, std::vector<Student> LNstudent,
-                       int CSnumber, int BEnumber, int LWnumber, int LNnumber)
+void chooseFacultyList(std::vector<Student> CSstudent, std::vector<Student> BEstudent, std::vector<Student> LWstudent, std::vector<Student> LNstudent, int CSnumber, int BEnumber, int LWnumber, int LNnumber)
 {
     bool exitLoop = false;
     std::string input;
@@ -398,7 +410,7 @@ void chooseFacultyList(std::vector<Student> CSstudent, std::vector<Student> BEst
                     std::cout << "You have chosen to view the list of Computer science students!:\n";
                     for(int j = 0; j < CSnumber; j++)
                     {
-                        CSstudent[j].showStudentInfo();
+                        CSstudent[j].showStudentInfoFaculty();
                         std::cout << "\n";
                     }
                 }
@@ -415,7 +427,7 @@ void chooseFacultyList(std::vector<Student> CSstudent, std::vector<Student> BEst
                     std::cout << "You have chosen to view the list of Business economics students\n";
                     for(int j = 0; j < BEnumber; j++)
                     {
-                        BEstudent[j].showStudentInfo();
+                        BEstudent[j].showStudentInfoFaculty();
                         std::cout << "\n";
                     }
                 }
@@ -432,7 +444,7 @@ void chooseFacultyList(std::vector<Student> CSstudent, std::vector<Student> BEst
                     std::cout << "You have chosen to view the list of Law students\n";
                     for(int j = 0; j < LWnumber; j++)
                     {
-                        LWstudent[j].showStudentInfo();
+                        LWstudent[j].showStudentInfoFaculty();
                         std::cout << "\n";
                     }
                 }
@@ -449,7 +461,7 @@ void chooseFacultyList(std::vector<Student> CSstudent, std::vector<Student> BEst
                     std::cout << "You have chosen to view the list of Language students\n";
                     for(int j = 0; j < LNnumber; j++)
                     {
-                        LNstudent[j].showStudentInfo();
+                        LNstudent[j].showStudentInfoFaculty();
                         std::cout << "\n";
                     }
                 }
@@ -469,3 +481,22 @@ void chooseFacultyList(std::vector<Student> CSstudent, std::vector<Student> BEst
         }
     }while (exitLoop == false);
 }
+
+void EndingProgramText(int i)
+{
+    if(i != 0)//if there are registered students also print this
+    {
+        std::cout << "Erasing student database."; Sleep(600);
+        std::cout << "."; Sleep(600);
+        std::cout << "."; Sleep(600);
+        system("CLS");
+    }
+        std::cout<< "Terminating program."; Sleep(600);
+        std::cout<< "."; Sleep(600);
+        std::cout<< "."; Sleep(600);
+        system("CLS");
+        std::cout<< "Thank you for using Unisystem!\n"; Sleep(500);
+}
+
+
+//TODO - Alphabetically order the student vectors (with one function for all of them)
