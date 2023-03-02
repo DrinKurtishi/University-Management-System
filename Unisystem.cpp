@@ -140,9 +140,7 @@ int main()
     std::string ID;
     std::string Surname;
     std::string Faculty;
-    int i = 0;//used to increment student array
     srand(time(0));//seed for random number that changes with time for giving unique ID
-    int random;//storing generated ID
     bool exitLoop = false;//to end program if user chooses
     std::vector<Student> student; //using vector instead of array to dynamically size it instead of having a prefixed limit of students
     Student newStudent;//create blank student object
@@ -154,10 +152,11 @@ int main()
     std::vector<Student> LNstudent;//vector for language students
 
     //keeping track of the number of students of specific faculties
-    int CSnumber = 0;
-    int BEnumber = 0;
-    int LWnumber = 0;
-    int LNnumber = 0;
+    int i = 0;//used to increment student array/ nr of all students
+    int CSnumber = 0; //nr of Cs students
+    int BEnumber = 0; //nr of BE students
+    int LWnumber = 0; //nr of Law students
+    int LNnumber = 0; //nr of Language students
 
     do{
         std::cout << "\nPress 1 to register new student: \n";
@@ -193,8 +192,7 @@ int main()
                 std::cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname()//display student name after registering
                           << " has been succesfuly registered!\n";
 
-                random = IDgenerator(); //generate random ID in range 130000 ~ 139999
-                ID = std::to_string(CheckAndSetID(random, IDvector));//validate ID so no duplicates are registered
+                ID = std::to_string(CheckAndSetID(IDgenerator(), IDvector));//generate and validate ID so no duplicates are registered
                 student[i].setID(ID); //set unique ID to Student
 
                 //SORT MAIN STUDENT ARRAY
