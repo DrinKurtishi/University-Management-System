@@ -248,7 +248,6 @@ int main()
             break;
 
             case 4:
-            //TOODOO CONTINUE THIS
                 system("CLS");
                 std::cout << "You have selected to view University statistics!\n";
                 if(i == 0)
@@ -257,8 +256,8 @@ int main()
                 }
                 else if(i == 1)
                 {
-                    std::cout << "\nThere is one student enrolled in your University ";
-                    if(CSnumber == 1)
+                    std::cout << "\nThere is one student enrolled in your University ";             //if there is only one student in the program
+                    if(CSnumber == 1)                                                               //then check in which faculty it is and display it
                     {
                        std::cout << "and he/she is studying Computer science.\n";
                     }
@@ -277,7 +276,7 @@ int main()
                 }
                 else
                 {
-                    std::cout << "\nThere are a total of " << i << " students enrolled in your University.\n";
+                    std::cout << "\nThere are a total of " << i << " students enrolled in your University.\n"; //if theres more than one student
                     showStudents(CSnumber, "Computer science");
                     showStudents(BEnumber, "Business economics");
                     showStudents(LWnumber, "Law");
@@ -285,9 +284,6 @@ int main()
                 }
                
             break;
-
-
-
 
             case 5://Ends program
                 EndingProgramText(i);  
@@ -539,27 +535,19 @@ void EndingProgramText(int i)
         std::cout<< "."; Sleep(600);
         std::cout<< "."; Sleep(600);
         system("CLS");
-        std::cout<< "Thank you for using Unisystem!\n"; Sleep(500);
+        std::cout<< "Thank you for using Unisystem!\n"; Sleep(1000);
 }
 
 void showStudents(int studentNumber, std::string faculty)
 {
-    std::cout << studentNumber << " in " << faculty; std::cout << ".\n";
+    if(studentNumber == 0)//if there are no students in faculty
+    {
+        std::cout << "None in " << faculty; std::cout << ".\n";
+    }
+    else
+    {
+        std::cout << studentNumber << " in " << faculty; std::cout << ".\n";
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //TODO - Alphabetically order the student vectors (with one function for all of them)
