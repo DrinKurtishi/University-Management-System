@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <Windows.h>
+#include <iomanip>
 
 std::string formatString(std::string, int);
 bool validateAttribute(std::string);
@@ -17,7 +18,7 @@ std::string GetAndSetAttribute(std::string);
 int IDgenerator();
 std::string ChooseFaculty();
 void EndingProgramText(int);
-
+void showStudents(int, std::string);
 
 
 
@@ -144,7 +145,7 @@ int main()
     bool exitLoop = false;//to end program if user chooses
     std::vector<Student> student; //using vector instead of array to dynamically size it instead of having a prefixed limit of students
     Student newStudent;//create blank student object
-    std::vector<int> IDvector;//vector to store unique IDs (to check for potential duplicates)
+    std::vector<int> IDvector;//vector to store unique IDs (and to check for potential duplicates)
 
     std::vector<Student> CSstudent;//vector to store only cs students for display
     std::vector<Student> BEstudent;//vector for business economics students
@@ -162,7 +163,8 @@ int main()
         std::cout << "\nPress 1 to register new student: \n";
         std::cout << "\nPress 2 to view every student list: \n";
         std::cout << "\nPress 3 to view student list of a specific faculty:\n";
-        std::cout << "\nPress 4 to end program(WARNING! This will erase your entire database)\n";
+        std::cout << "\nPress 4 to view University statistics:\n";
+        std::cout << "\nPress 5 to end program(WARNING! This will erase your entire database)\n";
         std::getline(std::cin, input);
         system("CLS");//clear screen
 
@@ -203,7 +205,7 @@ int main()
                 {
                     CSstudent.push_back(student[i]);
                     //SORT STUDENT ARRAY
-                    CSnumber++;//count number of students in faculty
+                    CSnumber++;//increment number of students in faculty
                 }
                 else if(Faculty == "Business economics")
                 {
@@ -245,7 +247,45 @@ int main()
                 chooseFacultyList(CSstudent, BEstudent, LWstudent, LNstudent, CSnumber, BEnumber, LWnumber, LNnumber);//show student list of specific faculty
             break;
 
-            case 4://Ends program
+            case 4:
+                system("CLS");
+                std::cout << "You have selected to view University statistics!\n";
+                if(i == 0)
+                {
+                    std::cout << "\nThere are no students enrolled in your University\n";
+                }
+                else if(i == 1)
+                {
+                    std::cout << "\nThere is one student enrolled in your University ";             //if there is only one student in the program
+                    if(CSnumber == 1)                                                               //then check in which faculty it is and display it
+                    {
+                       std::cout << "and he/she is studying Computer science.\n";
+                    }
+                    else if(BEnumber == 1)
+                    {
+                       std::cout << "and he/she is studying Business economics\n";
+                    }
+                    else if(LWnumber == 1)
+                    {
+                        std::cout << "and he/she is studying Law\n";
+                    }
+                    else
+                    {
+                        std::cout << "and he/she is studying Languages\n";
+                    }
+                }
+                else
+                {
+                    std::cout << "\nThere are a total of " << i << " students enrolled in your University.\n"; //if theres more than one student
+                    showStudents(CSnumber, "Computer science");
+                    showStudents(BEnumber, "Business economics");
+                    showStudents(LWnumber, "Law");
+                    showStudents(LNnumber, "Language");
+                }
+               
+            break;
+
+            case 5://Ends program
                 EndingProgramText(i);  
                 exitLoop = true;
             break; 
@@ -495,8 +535,19 @@ void EndingProgramText(int i)
         std::cout<< "."; Sleep(600);
         std::cout<< "."; Sleep(600);
         system("CLS");
-        std::cout<< "Thank you for using Unisystem!\n"; Sleep(500);
+        std::cout<< "Thank you for using Unisystem!\n"; Sleep(1000);
 }
 
+void showStudents(int studentNumber, std::string faculty)
+{
+    if(studentNumber == 0)//if there are no students in faculty
+    {
+        std::cout << "None in " << faculty; std::cout << ".\n";
+    }
+    else
+    {
+        std::cout << studentNumber << " in " << faculty; std::cout << ".\n";
+    }
+}
 
 //TODO - Alphabetically order the student vectors (with one function for all of them)
