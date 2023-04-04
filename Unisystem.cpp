@@ -1,7 +1,7 @@
 /*
     University management system - a C++ project for University
     Mentor: Prof. Lejla Abazi-Bexheti
-    Author: Drin Kurtishi
+    Author: Drin Kurtishi 130814
     Version: 1.0
 
 */
