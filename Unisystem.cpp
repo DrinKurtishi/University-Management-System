@@ -1,3 +1,11 @@
+/*
+    University management system - a C++ project for University
+    Mentor: Prof. Lejla Abazi-Bexheti
+    Author: Drin Kurtishi
+    Version: 1.0
+
+*/
+
 #include <iostream>
 #include <cstring>
 #include <string>
@@ -9,18 +17,6 @@
 #include <algorithm>
 #include <Windows.h>
 #include <iomanip>
-
-std::string formatString(std::string, int);
-bool validateAttribute(std::string);
-int CheckAndSetID(int, std::vector<int>);
-int ValidateChoice(std::string);
-std::string GetAndSetAttribute(std::string);
-int IDgenerator();
-std::string ChooseFaculty();
-void EndingProgramText(int);
-void showStudents(int, std::string);
-
-
 
 class Student{
     private:
@@ -35,102 +31,36 @@ class Student{
         bool nameFlag = false;
         
         //getters and setters for private variables
-        std::string getName()
-        {
-            return Name;
-        }
-        
-        void setName(std::string newName) 
-        {
-            if (validateAttribute(newName)) 
-            {
-                newName = formatString(newName, newName.length());
-                Name = newName;
-                nameFlag = false;
-            }       
-            else 
-            {
-                std::cout << "Invalid input: Name must contain a single word, without numbers and less than 15 characters.\n";
-                nameFlag = true;
-            }
-        }
+        std::string getName();
+        void setName(std::string);
+        std::string getSurname();
+        void setSurname(std::string);
+        std::string getID();
+        void setID(std::string);
+        std::string getFaculty();
+        void setFaculty(std::string);
 
-        std::string getSurname()
-        {
-            return Surname;
-        }
+        //default constructor and custom constructor
+        Student(); 
+        Student(std::string, std::string, std::string, std::string);
 
-        void setSurname(std::string newSurname) 
-        {
-            if (validateAttribute(newSurname)) 
-            {
-                newSurname = formatString(newSurname, newSurname.length());
-                Surname = newSurname;
-                surnameFlag = false;
-            } 
-            else 
-            {
-                std::cout << "Invalid input: Surname must contain a single word, without numbers and less than 15 characters.\n";
-                surnameFlag = true;
-            }
-        }
-
-        std::string getID()
-        {
-            return ID;
-        }
-
-        void setID(std::string newID)
-        {
-            ID = newID;
-        }
-         
-        std::string getFaculty()
-        {
-            return Faculty;
-        }
-        
-        void setFaculty(std::string newFaculty)
-        {
-            Faculty = newFaculty;
-        }
-
-        Student() //default constructor for all students
-        {
-            Name = "blank";
-            Surname = "blank";
-            ID = "blank";
-            Faculty = "blank";
-        }
-
-        Student(std::string name, std::string surname, std::string id, std::string faculty) //constructor
-        {
-            Name = name;
-            Surname = surname;
-            ID = id;
-            Faculty = faculty;
-        }
-
-        void showStudentInfo()
-        {
-            std::cout 
-            << "Name: " << Name << "\n"
-            << "Surname: " << Surname << "\n"
-            << "ID: " << ID << "\n"
-            << "Faculty: " << Faculty << "\n"
-            << "\n*************************\n";
-        }
-        void showStudentInfoFaculty()//used when displaying students of the same faculty (we dont need their faculty because we know it)
-        {
-            std::cout 
-            << "Name: " << Name << "\n"
-            << "Surname: " << Surname << "\n"
-            << "ID: " << ID << "\n"
-            << "\n*************************\n";
-        }
+        //methods for showing information
+        void showStudentInfo();
+        void showStudentInfoFaculty();//used when displaying students of the same faculty (we dont need their faculty because we know it)
 };
 
+//functions for input validation
+bool validateAttribute(std::string);
+int CheckAndSetID(int, std::vector<int>);
+int ValidateChoice(std::string);
 
+//functions for simplifying main
+std::string GetAndSetAttribute(std::string);
+int IDgenerator();
+std::string formatString(std::string, int);//formats users input(Uppercase letters followed by lowercase letters)
+std::string ChooseFaculty();
+void EndingProgramText(int);
+void showStudents(int, std::string);
 void chooseFacultyList(std::vector<Student>, std::vector<Student>, std::vector<Student>, std::vector<Student>, int, int, int, int);
 
 int main()
@@ -550,4 +480,99 @@ void showStudents(int studentNumber, std::string faculty)
     }
 }
 
-//TODO - Alphabetically order the student vectors (with one function for all of them)
+//METHODS OF STUDENT CLASS
+
+std::string Student::getName()
+{
+    return Name;
+}
+
+void Student::setName(std::string newName)
+{
+     if (validateAttribute(newName)) 
+     {
+        newName = formatString(newName, newName.length());
+        Name = newName;
+        nameFlag = false;
+    }       
+    else 
+    {
+        std::cout << "Invalid input: Name must contain a single word, without numbers and less than 15 characters.\n";
+        nameFlag = true;
+    }
+}
+
+std::string Student::getSurname()
+{
+    return Surname;
+}
+
+void Student::setSurname(std::string newSurname)
+{
+     if (validateAttribute(newSurname)) 
+    {
+        newSurname = formatString(newSurname, newSurname.length());
+        Surname = newSurname;
+        surnameFlag = false;
+    } 
+    else 
+    {
+        std::cout << "Invalid input: Surname must contain a single word, without numbers and less than 15 characters.\n";
+        surnameFlag = true;
+    }
+}
+
+std::string Student::getID()
+{
+    return ID;
+}
+
+void Student::setID(std::string newID)
+{
+    ID=newID;
+}
+
+std::string Student::getFaculty()
+{
+    return Faculty;
+}
+
+void Student::setFaculty(std::string newFaculty)
+{
+    Faculty = newFaculty;
+}
+
+Student::Student()//constructor
+{
+    Name = "blank";
+    Surname = "blank";
+    ID = "blank";
+    Faculty = "blank";
+}
+
+Student::Student(std::string name, std::string surname, std::string id, std::string faculty) //constructor
+{
+    Name = name;
+    Surname = surname;
+    ID = id;
+    Faculty = faculty;
+}
+
+void Student::showStudentInfo()
+{
+    std::cout 
+    << "Name: " << Name << "\n"
+    << "Surname: " << Surname << "\n"
+    << "ID: " << ID << "\n"
+    << "Faculty: " << Faculty << "\n"
+    << "\n*************************\n";
+}
+
+void Student::showStudentInfoFaculty()//used when displaying students of the same faculty (we dont need their faculty because we know it)
+{
+    std::cout 
+    << "Name: " << Name << "\n"
+    << "Surname: " << Surname << "\n"
+    << "ID: " << ID << "\n"
+    << "\n*************************\n";
+}
