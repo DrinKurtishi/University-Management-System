@@ -37,7 +37,10 @@
 #include <algorithm>
 #include <Windows.h>
 #include <iomanip>
-using std::string, std::vector, std::cout, std::cin;
+using std::string;
+using std::vector;
+using std::cout;
+using std::cin;
 
 class Student{
     private:
@@ -70,7 +73,7 @@ class Student{
 
         //methods for showing information
         void showStudentInfo();
-        void showStudentInfoFaculty();//used when displaying only students of the same faculty (we dont need their faculty because we know it)
+        void showStudentInfoFaculty();//used when displaying only students of the same faculty(doesnt print students faculty because its redundant information)
 };
 
 //Main helper functions for every switch case (these use the functions specified below)
@@ -98,13 +101,14 @@ bool compareByName(Student&, Student&); //comparator used to tell std::sort to s
 
 int main()
 {
+    system("CLS");
     int choice;
     string input;
     string Name;
     string ID;
     string Surname;
     string Faculty;
-    srand(time(0));//seed for random number that changes with time for giving unique ID
+    srand(time(0));//seed for random number that changes with time for giving unique IDs
     bool exitLoop = false;//to end program if user chooses
     vector<Student> student; //using vector instead of array to dynamically size it instead of having a prefixed limit of students
     Student newStudent;//create blank student object
@@ -150,6 +154,8 @@ int main()
 
             default:
                 cout << "Invalid input, please try again.\n";
+                system("PAUSE");
+                system("CLS");
         }
     }while(exitLoop == false);
     return 0;
@@ -158,11 +164,12 @@ int main()
 //MAIN HELPER FUNCTIONS
 
 int showMainMenu() {
-    cout << "\nPress 1 to register new student: \n";
-    cout << "Press 2 to view every student list: \n";
-    cout << "Press 3 to view student list of a specific faculty:\n";
-    cout << "Press 4 to view University statistics:\n";
-    cout << "Press 5 to end program(WARNING! This will erase your entire database)\n";
+    cout << "UNIVERSITY MANAGEMENT SYSTEM\n"
+         << "Press 1 to register new student: \n"
+         << "Press 2 to view every student list: \n"
+         << "Press 3 to view student list of a specific faculty:\n"
+         << "Press 4 to view University statistics:\n"
+         << "Press 5 to end program(WARNING! This will erase your entire database)\n";
 
     string input;
     std::getline(cin, input);
@@ -192,7 +199,8 @@ void registerStudent(vector<Student>& student, int& i, string& ID, vector<int>& 
     ID = std::to_string(CheckAndSetID(IDgenerator(), IDvector)); // generate and validate ID so no duplicates are registered
     student[i].setID(ID); // set unique ID to Student
 
-    
+    system("PAUSE");
+    system("CLS");
 
     // choose in which faculty vector to put student
     string Faculty = student[i].getFaculty();
@@ -217,7 +225,7 @@ void registerStudent(vector<Student>& student, int& i, string& ID, vector<int>& 
     sort(LWstudent.begin(), LWstudent.end(), compareByName);
     sort(LNstudent.begin(), LNstudent.end(), compareByName);
 }
-void displayAllStudents(vector<Student>& student, int i) {
+void displayAllStudents(vector<Student>& student, int i) {//displays all registered students
     if (i != 0) {
         for (int j = 0; j < i; j++) {
             cout << "Student " << j + 1 << ":\n";
@@ -234,6 +242,8 @@ void displayUniversityStatistics(int i, int CSnumber, int BEnumber, int LWnumber
     cout << "You have selected to view University statistics!\n";
     if (i == 0) {
         cout << "\nThere are no students enrolled in your University.\n";
+        system("PAUSE");
+        system("CLS");
     }
     else if (i == 1) {
         cout << "\nThere is one student enrolled in your University. ";
@@ -249,6 +259,8 @@ void displayUniversityStatistics(int i, int CSnumber, int BEnumber, int LWnumber
         else {
             cout << "He/she is studying Languages.\n";
         }
+        system("PAUSE");
+        system("CLS");
     }
     else {
         cout << "\nThere are a total of " << i << " students enrolled in your University.\n";
@@ -256,6 +268,8 @@ void displayUniversityStatistics(int i, int CSnumber, int BEnumber, int LWnumber
         showStudents(BEnumber, "Business economics");
         showStudents(LWnumber, "Law");
         showStudents(LNnumber, "Language");
+        system("PAUSE");
+        system("CLS");
     }
 }
 
@@ -398,6 +412,8 @@ string ChooseFaculty()//switch case for choosing faculty of student
 
             default:
                 cout << "Invalid input, please try again\n";
+                system("PAUSE");
+                system("CLS");
         }
     }while(exitFacultyLoop == false);
     return faculty;
@@ -436,6 +452,8 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
                 else
                 {
                     cout << "Please enter at least one Computer science student.\n";
+                    system("PAUSE");
+                    system("CLS");
                 }
                
             break;
@@ -453,6 +471,8 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
                 else
                 {
                      cout << "Please enter at least one Business economics student.\n";
+                     system("PAUSE");
+                     system("CLS");
                 }
                
             break;
@@ -470,6 +490,8 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
                 else
                 {
                     cout << "Please enter at least one Law student.\n";
+                    system("PAUSE");
+                    system("CLS");
                 }
                
             break;
@@ -487,6 +509,8 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
                 else
                 {
                     cout << "Please enter at least one Language student.\n";
+                    system("PAUSE");
+                    system("CLS");
                 }
                 
             break;
@@ -497,6 +521,8 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
 
             default:
                 cout << "Invalid input, please try again.\n";
+                system("PAUSE");
+                system("CLS");
         }
     }while (exitLoop == false);
 }
@@ -579,7 +605,7 @@ void Student::setFaculty(string newFaculty)
     Faculty = newFaculty;
 }
 
-Student::Student()//constructor
+Student::Student()//default constructor
 {
     Name = "blank";
     Surname = "blank";
@@ -587,7 +613,7 @@ Student::Student()//constructor
     Faculty = "blank";
 }
 
-Student::Student(string name, string surname, string id, string faculty) //constructor
+Student::Student(string name, string surname, string id, string faculty) //custom constructor
 {
     Name = name;
     Surname = surname;
