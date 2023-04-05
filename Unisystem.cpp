@@ -12,7 +12,8 @@
     all the relevant information and behaviors of a student, making it easier to manage and manipulate student data. 
 
     When registering a new student, the program generates a unique ID and stores it in a vector to avoid duplicates. It also sorts the student 
-    into the appropriate faculty vector and increments the number of students in that faculty.
+    into the appropriate faculty vector and increments the number of students in that faculty. After storing the registered students in vectors, 
+    the program alphabetically sorts the students for better readability.
 
     The program uses a switch statement to determine which function to run based on the user's input.
 
