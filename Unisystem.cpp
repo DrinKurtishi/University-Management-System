@@ -71,7 +71,7 @@ class Student{
         Student(); 
         Student(string, string, string, string);
 
-        //methods for showing information
+        //methods for showing student information
         void showStudentInfo();
         void showStudentInfoFaculty();//used when displaying only students of the same faculty(doesnt print students faculty because its redundant information)
 };
@@ -164,12 +164,19 @@ int main()
 //MAIN HELPER FUNCTIONS
 
 int showMainMenu() {
-    cout << "UNIVERSITY MANAGEMENT SYSTEM\n"
-         << "Press 1 to register new student: \n"
-         << "Press 2 to view every student list: \n"
-         << "Press 3 to view student list of a specific faculty:\n"
-         << "Press 4 to view University statistics:\n"
-         << "Press 5 to end program(WARNING! This will erase your entire database)\n";
+    cout << char(201) << char(205) << char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) << char(187)<<"\n" 
+         << char(186) << "           UNIVERSITY MANAGEMENT SYSTEM           "   << char(186) << "\n" 
+         << char(186) << "--------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         << char(186) << " Press 1 to register new student:                 "   << char(186) << "\n"  
+         << char(186) << "--------------------------------------------------"   << char(186) << "\n" 
+         << char(186) << " Press 2 to view every student list:              "   << char(186) << "\n"  
+         << char(186) << "--------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+         << char(186) << " Press 3 to view students of a specific faculty:  "   << char(186) << "\n" 
+         << char(186) << "--------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         << char(186) << " Press 4 to view University statistics:           "   << char(186) << "\n" 
+         << char(186) << "--------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+         << char(186) << " Press 5 to end program                           "   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+         << char(200) << char(205) << char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) <<char(205) << char(188)<<"\n";
 
     string input;
     std::getline(cin, input);
@@ -217,7 +224,7 @@ void registerStudent(vector<Student>& student, int& i, string& ID, vector<int>& 
         LNstudent.push_back(student[i]);
         LNnumber++;
     }
-    i++; // increment i to move to the next student in the array
+    i++; // increment i to move to the next student in the array9
     sort(student.begin(), student.end(), compareByName);//sort main student vector
     //sort individual faculty vectors
     sort(CSstudent.begin(), CSstudent.end(), compareByName);
@@ -226,14 +233,19 @@ void registerStudent(vector<Student>& student, int& i, string& ID, vector<int>& 
     sort(LNstudent.begin(), LNstudent.end(), compareByName);
 }
 void displayAllStudents(vector<Student>& student, int i) {//displays all registered students
+    cout << "You have chosen to view the list of all students!\n";
     if (i != 0) {
         for (int j = 0; j < i; j++) {
             cout << "Student " << j + 1 << ":\n";
             student[j].showStudentInfo();
         }
+        system("PAUSE");
+        system("CLS");
     }
     else {
         cout << "Please enter at least one student.\n";
+         system("PAUSE");
+         system("CLS");
     }
 }
 
