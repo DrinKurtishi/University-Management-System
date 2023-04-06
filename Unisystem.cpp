@@ -237,10 +237,12 @@ void registerStudent(vector<Student>& student, int& i, string& ID, vector<int>& 
     sort(LNstudent.begin(), LNstudent.end(), compareByName);
 }
 void displayAllStudents(vector<Student>& student, int i) {//displays all registered students
-    cout << "You have chosen to view the list of all students!\n";
     if (i != 0) {
+        cout << "               LIST OF ALL STUDENTS\n"
+             << "---------------------------------------------------\n\n";
         for (int j = 0; j < i; j++) {
-            cout << "Student " << j + 1 << ":\n";
+            cout << char(201); for(int i = 0; i < 50; i++){cout << char(205);}//top row
+            cout << "\n" << char(186) << " STUDENT " << j + 1 << ":\n";
             student[j].showStudentInfo();
         }
         system("PAUSE");
@@ -317,7 +319,7 @@ bool validateAttribute(string attribute)
             return false; // if there is a number in the input
         }
     }
-    if(attribute.length() >= 10)
+    if(attribute.length() >= 15)
     {
         return false;
     }
@@ -475,11 +477,12 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
             case 1:
                 if(CSnumber != 0)
                 {
-                    cout << "You have chosen to view the list of Computer science students!:\n";
+                    cout << "LIST OF COMPUTER SCIENCE STUDENTS\n";
                     for(int j = 0; j < CSnumber; j++)
                     {
+                        cout << char(201); for(int i = 0; i < 50; i++){cout << char(205);}//top row
+                        cout << "\n" << char(186) << " STUDENT " << j + 1 << ":\n";
                         CSstudent[j].showStudentInfoFaculty();
-                        cout << "\n";
                     }
                 }
                 else
@@ -494,9 +497,11 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
             case 2:
                 if(BEnumber != 0)
                 {
-                    cout << "You have chosen to view the list of Business economics students\n";
+                    cout << "LIST OF BUSINESS ECONOMICS STUDENTS\n";
                     for(int j = 0; j < BEnumber; j++)
                     {
+                        cout << char(201); for(int i = 0; i < 50; i++){cout << char(205);}//top row
+                        cout << "\n" << char(186) << " STUDENT " << j + 1 << ":\n";
                         BEstudent[j].showStudentInfoFaculty();
                         cout << "\n";
                     }
@@ -656,19 +661,26 @@ Student::Student(string name, string surname, string id, string faculty) //custo
 
 void Student::showStudentInfo()
 {
-    cout 
-    << "Name: " << Name << "\n"
-    << "Surname: " << Surname << "\n"
-    << "ID: " << ID << "\n"
-    << "Faculty: " << Faculty << "\n"
-    << "\n*************************\n";
+
+    cout << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         << char(186) << " Name: " << Name << "\n"  
+         << char(186) << "--------------------------------------------------"   << "\n" 
+         << char(186) << " Surname: "<< Surname  << "\n"  
+         << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+         << char(186) << " ID: " << ID << "\n" 
+         << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         << char(186) << " Faculty: " << Faculty << "\n"
+         << char(186) << "--------------------------------------------------"   << "\n\n\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
 }
 
 void Student::showStudentInfoFaculty()//used when displaying students of the same faculty (we dont need their faculty because we know it)
 {
-    cout 
-    << "Name: " << Name << "\n"
-    << "Surname: " << Surname << "\n"
-    << "ID: " << ID << "\n"
-    << "\n*************************\n";
+    cout << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         << char(186) << " Name: " << Name << "\n"  
+         << char(186) << "--------------------------------------------------"   << "\n" 
+         << char(186) << " Surname: "<< Surname  << "\n"  
+         << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+         << char(186) << " ID: " << ID << "\n" 
+         << char(186) << "--------------------------------------------------"   << "\n\n\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 }
