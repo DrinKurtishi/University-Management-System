@@ -155,7 +155,7 @@ int main()
             break; 
 
             default:
-                cout << "Invalid input, please try again.\n";
+                cout << "Invalid input, please try again.\n\n";
                 system("PAUSE");
                 system("CLS");
         }
@@ -249,7 +249,7 @@ void displayAllStudents(vector<Student>& student, int i) {//displays all registe
         system("CLS");
     }
     else {
-        cout << "Please enter at least one student.\n";
+        cout << "Please enter at least one student.\n\n";
          system("PAUSE");
          system("CLS");
     }
@@ -299,7 +299,7 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
                 }
                 else
                 {
-                    cout << "Please enter at least one Computer science student.\n";
+                    cout << "Please enter at least one Computer science student.\n\n";
                 }
                 system("PAUSE");
                 system("CLS");
@@ -322,7 +322,7 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
                 }
                 else
                 {
-                     cout << "Please enter at least one Business economics student.\n";
+                     cout << "Please enter at least one Business economics student.\n\n";
                 }
                 system("PAUSE");
                 system("CLS");
@@ -345,7 +345,7 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
                 }
                 else
                 {
-                    cout << "Please enter at least one Law student.\n";
+                    cout << "Please enter at least one Law student.\n\n";
                 }
                 system("PAUSE");
                 system("CLS");
@@ -368,7 +368,7 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
                 }
                 else
                 {
-                    cout << "Please enter at least one Language student.\n";
+                    cout << "Please enter at least one Language student.\n\n";
                 }
                 system("PAUSE");
                 system("CLS");
@@ -380,7 +380,7 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
             break;
 
             default:
-                cout << "Invalid input, please try again.\n";
+                cout << "Invalid input, please try again.\n\n";
                 system("PAUSE");
                 system("CLS");
         }
@@ -410,6 +410,7 @@ void displayUniversityStatistics(int i, int CSnumber, int BEnumber, int LWnumber
         else {
             cout << "He/she is studying Languages.\n";
         }
+        cout << "\n";
         system("PAUSE");
         system("CLS");
     }
@@ -576,7 +577,7 @@ string ChooseFaculty()//switch case for choosing faculty of student
             break;
 
             default:
-                cout << "Invalid input, please try again\n";
+                cout << "Invalid input, please try again\n\n";
                 system("PAUSE");
                 system("CLS");
         }
@@ -617,7 +618,7 @@ void Student::setName(string newName)
     }       
     else 
     {
-        cout << "Invalid input: Name must contain a single word, without numbers and less than 15 characters.\n";
+        cout << "Invalid input: Name must contain a single word, without numbers and less than 15 characters.\n\n";
         nameFlag = true;
     }
 }
@@ -637,7 +638,7 @@ void Student::setSurname(string newSurname)
     } 
     else 
     {
-        cout << "Invalid input: Surname must contain a single word, without numbers and less than 15 characters.\n";
+        cout << "Invalid input: Surname must contain a single word, without numbers and less than 15 characters.\n\n";
         surnameFlag = true;
     }
 }
