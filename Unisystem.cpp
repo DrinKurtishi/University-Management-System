@@ -82,6 +82,7 @@ class Student{
 int showMainMenu();
 void registerStudent(vector<Student>&, int&, string&, vector<int>&, vector<Student>&, vector<Student>&, vector<Student>&, vector<Student>&, int&, int&, int&, int&, string, string);
 void displayAllStudents(vector<Student>&, int);
+void chooseFacultyList(vector<Student>&, vector<Student>&, vector<Student>&, vector<Student>&, int&, int&, int&, int&);
 void displayUniversityStatistics(int, int, int, int, int);
 void EndingProgramText(int);
 
@@ -95,7 +96,6 @@ string GetAndSetAttribute(string);
 int IDgenerator();
 string formatString(string, int);//formats users input(Uppercase letters followed by lowercase letters)
 string ChooseFaculty();
-void chooseFacultyList(vector<Student>&, vector<Student>&, vector<Student>&, vector<Student>&, int&, int&, int&, int&);
 void showStudents(int, string);
 
 //function for sorting algorithm
@@ -145,7 +145,7 @@ int main()
                 chooseFacultyList(CSstudent, BEstudent, LWstudent, LNstudent, CSnumber, BEnumber, LWnumber, LNnumber);
             break;
 
-            case 4://displays some information about the University
+            case 4://displays some information about the University (nr of students)
                 displayUniversityStatistics(i, CSnumber, BEnumber, LWnumber, LNnumber);
             break;
 
@@ -205,7 +205,7 @@ void registerStudent(vector<Student>& student, int& i, string& ID, vector<int>& 
     } while(student[i].surnameFlag == true); // if invalid, prompt again.
 
     cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname() // display student name after registering
-              << " has been succesfuly registered!\n";
+              << " has been succesfuly registered!\n\n\n";
 
     ID = std::to_string(CheckAndSetID(IDgenerator(), IDvector)); // generate and validate ID so no duplicates are registered
     student[i].setID(ID); // set unique ID to Student
@@ -238,11 +238,11 @@ void registerStudent(vector<Student>& student, int& i, string& ID, vector<int>& 
 }
 void displayAllStudents(vector<Student>& student, int i) {//displays all registered students
     if (i != 0) {
-        cout << "               LIST OF ALL STUDENTS\n"
-             << "---------------------------------------------------\n\n";
+        cout << "      LIST OF ALL STUDENTS\n"
+             << "-------------------------------\n\n";
         for (int j = 0; j < i; j++) {
-            cout << char(201); for(int i = 0; i < 50; i++){cout << char(205);}//top row
-            cout << "\n" << char(186) << " STUDENT " << j + 1 << ":\n";
+            cout << char(201); for(int i = 0; i < 30; i++){cout << char(205);}//top row
+            cout << "\n" << char(186) << "           STUDENT " << j + 1 << ":\n";
             student[j].showStudentInfo();
         }
         system("PAUSE");
@@ -255,9 +255,142 @@ void displayAllStudents(vector<Student>& student, int i) {//displays all registe
     }
 }
 
+void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, vector<Student>& LWstudent, vector<Student>& LNstudent, int& CSnumber, int& BEnumber, int& LWnumber, int& LNnumber)
+{
+    bool exitLoop = false;
+    string input;
+    int choice;
+    do 
+    {
+       
+        cout << char(201);   for(int i = 0; i < 54; i++){cout << char(205);}       cout << char(187) << "\n"; //top row
+        cout << char(186) << "                 VIEW SPECIFIC FACULTY                "   << char(186) << "\n" 
+             << char(186) << "------------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+             << char(186) << " Press 1 to view list of Computer science students:   "   << char(186) << "\n"  
+             << char(186) << "------------------------------------------------------"   << char(186) << "\n" 
+             << char(186) << " Press 2 to view list of Business economics students: "   << char(186) << "\n"  
+             << char(186) << "------------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+             << char(186) << " Press 3 to view list of Law students:                "   << char(186) << "\n" 
+             << char(186) << "------------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+             << char(186) << " Press 4 to view list of Language students:           "   << char(186) << "\n" 
+             << char(186) << "------------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+             << char(186) << " Press 5 to go back to main menu:                     "   << char(186) << "\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+        cout << char(200);    for(int i = 0; i < 54; i++){cout << char(205);}      cout << char(188) << "\n"; //bottom row
+
+        cout << "\n-------------------------------------\n"
+             << "Enter your choice here:  ";
+        std::getline(cin, input);
+        system("CLS");
+        choice = ValidateChoice(input);
+
+        switch(choice)
+        {
+            case 1:
+                if(CSnumber != 0)
+                {
+                    cout << "LIST OF COMPUTER SCIENCE STUDENTS\n"
+                         << "---------------------------------\n";
+                    for(int j = 0; j < CSnumber; j++)
+                    {
+                        cout << char(201); for(int i = 0; i < 30; i++){cout << char(205);}//top row
+                        cout << "\n" << char(186) << "          STUDENT " << j + 1 << ":\n";
+                        CSstudent[j].showStudentInfoFaculty();
+                    }
+                }
+                else
+                {
+                    cout << "Please enter at least one Computer science student.\n";
+                }
+                system("PAUSE");
+                system("CLS");
+               
+            break;
+
+            case 2:
+                if(BEnumber != 0)
+                {
+                    cout << "LIST OF BUSINESS ECONOMICS STUDENTS\n"
+                         << "-----------------------------------\n";
+
+                    for(int j = 0; j < BEnumber; j++)
+                    {
+                        cout << char(201); for(int i = 0; i < 30; i++){cout << char(205);}//top row
+                        cout << "\n" << char(186) << "          STUDENT " << j + 1 << ":\n";
+                        BEstudent[j].showStudentInfoFaculty();
+                        cout << "\n";
+                    }
+                }
+                else
+                {
+                     cout << "Please enter at least one Business economics student.\n";
+                }
+                system("PAUSE");
+                system("CLS");
+               
+            break;
+
+            case 3:
+                if(LWnumber != 0)
+                {
+                    cout << "LIST OF LAW STUDENTS\n"
+                         << "---------------------------------\n";
+
+                    for(int j = 0; j < LWnumber; j++)
+                    {
+                        cout << char(201); for(int i = 0; i < 30; i++){cout << char(205);}//top row
+                        cout << "\n" << char(186) << "          STUDENT " << j + 1 << ":\n";
+                        LWstudent[j].showStudentInfoFaculty();
+                        cout << "\n";
+                    }
+                }
+                else
+                {
+                    cout << "Please enter at least one Law student.\n";
+                }
+                system("PAUSE");
+                system("CLS");
+               
+            break;
+
+            case 4:
+                if(LNnumber != 0)
+                {
+                    cout << "LIST OF LANGUAGE STUDENTS\n"
+                         << "---------------------------------\n";
+
+                    for(int j = 0; j < LNnumber; j++)
+                    {
+                        cout << char(201); for(int i = 0; i < 30; i++){cout << char(205);}//top row
+                        cout << "\n" << char(186) << "          STUDENT " << j + 1 << ":\n";
+                        LNstudent[j].showStudentInfoFaculty();
+                        cout << "\n";
+                    }
+                }
+                else
+                {
+                    cout << "Please enter at least one Language student.\n";
+                }
+                system("PAUSE");
+                system("CLS");
+                
+            break;
+
+            case 5:
+                exitLoop = true;
+            break;
+
+            default:
+                cout << "Invalid input, please try again.\n";
+                system("PAUSE");
+                system("CLS");
+        }
+    }while (exitLoop == false);
+}
+
 void displayUniversityStatistics(int i, int CSnumber, int BEnumber, int LWnumber, int LNnumber) {
     system("CLS");
-    cout << "You have selected to view University statistics!\n";
+    cout << "UNIVERSITY STATISTICS\n"
+         << "-----------------------------\n";
     if (i == 0) {
         cout << "\nThere are no students enrolled in your University.\n";
         system("PAUSE");
@@ -281,11 +414,18 @@ void displayUniversityStatistics(int i, int CSnumber, int BEnumber, int LWnumber
         system("CLS");
     }
     else {
-        cout << "\nThere are a total of " << i << " students enrolled in your University.\n";
-        showStudents(CSnumber, "Computer science");
-        showStudents(BEnumber, "Business economics");
-        showStudents(LWnumber, "Law");
-        showStudents(LNnumber, "Language");
+            cout << char(201);   for(int i = 0; i < 50; i++){cout << char(205);}  cout << "\n"; //top row
+            cout << char(186) << "There are " << i << " students enrolled in your University.   " << "\n"   
+                 << char(186) << "--------------------------------------------------" << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                 << char(186);    showStudents(CSnumber, "Computer science");          
+            cout << char(186) << "--------------------------------------------------" << "\n"    
+                 << char(186);    showStudents(BEnumber, "Business economics");         
+            cout << char(186) << "--------------------------------------------------" << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                 << char(186);    showStudents(LWnumber, "Law");                          
+            cout << char(186) << "--------------------------------------------------" << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                 << char(186);    showStudents(LNnumber, "Language");                    
+            cout << char(186) << "--------------------------------------------------" << "\n\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
         system("PAUSE");
         system("CLS");
     }
@@ -319,7 +459,7 @@ bool validateAttribute(string attribute)
             return false; // if there is a number in the input
         }
     }
-    if(attribute.length() >= 15)
+    if(attribute.length() >= 15)//invalidate input if more than 15 characters
     {
         return false;
     }
@@ -444,127 +584,6 @@ string ChooseFaculty()//switch case for choosing faculty of student
     return faculty;
 }
 
-void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, vector<Student>& LWstudent, vector<Student>& LNstudent, int& CSnumber, int& BEnumber, int& LWnumber, int& LNnumber)
-{
-    bool exitLoop = false;
-    string input;
-    int choice;
-    do 
-    {
-       
-        cout << char(201);   for(int i = 0; i < 54; i++){cout << char(205);}       cout << char(187) << "\n"; //top row
-        cout << char(186) << "                 VIEW SPECIFIC FACULTY                "   << char(186) << "\n" 
-             << char(186) << "------------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-             << char(186) << " Press 1 to view list of Computer science students:   "   << char(186) << "\n"  
-             << char(186) << "------------------------------------------------------"   << char(186) << "\n" 
-             << char(186) << " Press 2 to view list of Business economics students: "   << char(186) << "\n"  
-             << char(186) << "------------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-             << char(186) << " Press 3 to view list of Law students:                "   << char(186) << "\n" 
-             << char(186) << "------------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-             << char(186) << " Press 4 to view list of Language students:           "   << char(186) << "\n" 
-             << char(186) << "------------------------------------------------------"   << char(186) << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-             << char(186) << " Press 5 to go back to main menu:                     "   << char(186) << "\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-        cout << char(200);    for(int i = 0; i < 54; i++){cout << char(205);}      cout << char(188) << "\n"; //bottom row
-
-        cout << "\n-------------------------------------\n"
-             << "Enter your choice here:  ";
-        std::getline(cin, input);
-        system("CLS");
-        choice = ValidateChoice(input);
-
-        switch(choice)
-        {
-            case 1:
-                if(CSnumber != 0)
-                {
-                    cout << "LIST OF COMPUTER SCIENCE STUDENTS\n";
-                    for(int j = 0; j < CSnumber; j++)
-                    {
-                        cout << char(201); for(int i = 0; i < 50; i++){cout << char(205);}//top row
-                        cout << "\n" << char(186) << " STUDENT " << j + 1 << ":\n";
-                        CSstudent[j].showStudentInfoFaculty();
-                    }
-                }
-                else
-                {
-                    cout << "Please enter at least one Computer science student.\n";
-                }
-                system("PAUSE");
-                system("CLS");
-               
-            break;
-
-            case 2:
-                if(BEnumber != 0)
-                {
-                    cout << "LIST OF BUSINESS ECONOMICS STUDENTS\n";
-                    for(int j = 0; j < BEnumber; j++)
-                    {
-                        cout << char(201); for(int i = 0; i < 50; i++){cout << char(205);}//top row
-                        cout << "\n" << char(186) << " STUDENT " << j + 1 << ":\n";
-                        BEstudent[j].showStudentInfoFaculty();
-                        cout << "\n";
-                    }
-                }
-                else
-                {
-                     cout << "Please enter at least one Business economics student.\n";
-                }
-                system("PAUSE");
-                system("CLS");
-               
-            break;
-
-            case 3:
-                if(LWnumber != 0)
-                {
-                    cout << "You have chosen to view the list of Law students\n";
-                    for(int j = 0; j < LWnumber; j++)
-                    {
-                        LWstudent[j].showStudentInfoFaculty();
-                        cout << "\n";
-                    }
-                }
-                else
-                {
-                    cout << "Please enter at least one Law student.\n";
-                }
-                system("PAUSE");
-                system("CLS");
-               
-            break;
-
-            case 4:
-                if(LNnumber != 0)
-                {
-                    cout << "You have chosen to view the list of Language students\n";
-                    for(int j = 0; j < LNnumber; j++)
-                    {
-                        LNstudent[j].showStudentInfoFaculty();
-                        cout << "\n";
-                    }
-                }
-                else
-                {
-                    cout << "Please enter at least one Language student.\n";
-                }
-                system("PAUSE");
-                system("CLS");
-                
-            break;
-
-            case 5:
-                exitLoop = true;
-            break;
-
-            default:
-                cout << "Invalid input, please try again.\n";
-                system("PAUSE");
-                system("CLS");
-        }
-    }while (exitLoop == false);
-}
-
 void showStudents(int studentNumber, string faculty)
 {
     if(studentNumber == 0)//if there are no students in faculty
@@ -662,25 +681,25 @@ Student::Student(string name, string surname, string id, string faculty) //custo
 void Student::showStudentInfo()
 {
 
-    cout << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+    cout << char(186) << "------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
          << char(186) << " Name: " << Name << "\n"  
-         << char(186) << "--------------------------------------------------"   << "\n" 
+         << char(186) << "------------------------------"   << "\n" 
          << char(186) << " Surname: "<< Surname  << "\n"  
-         << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+         << char(186) << "------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
          << char(186) << " ID: " << ID << "\n" 
-         << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         << char(186) << "------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
          << char(186) << " Faculty: " << Faculty << "\n"
-         << char(186) << "--------------------------------------------------"   << "\n\n\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         << char(186) << "------------------------------"   << "\n\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 
 }
 
 void Student::showStudentInfoFaculty()//used when displaying students of the same faculty (we dont need their faculty because we know it)
 {
-    cout << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+    cout << char(186) << "------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
          << char(186) << " Name: " << Name << "\n"  
-         << char(186) << "--------------------------------------------------"   << "\n" 
+         << char(186) << "------------------------------"   << "\n" 
          << char(186) << " Surname: "<< Surname  << "\n"  
-         << char(186) << "--------------------------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+         << char(186) << "------------------------------"   << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
          << char(186) << " ID: " << ID << "\n" 
-         << char(186) << "--------------------------------------------------"   << "\n\n\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+         << char(186) << "------------------------------"   << "\n\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 }
