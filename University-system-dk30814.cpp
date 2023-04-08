@@ -436,15 +436,15 @@ void displayUniversityStatistics(int& i, int& CSnumber, int& BEnumber, int& LWnu
     else 
     {
             cout << char(201);   for(int i = 0; i < 50; i++){cout << char(205);}  cout << "\n"; //top row
-            cout << char(186) << "There are " << i << " students enrolled in your University.   " << "\n"   
+            cout << char(186) << " There are " << i << " students enrolled in your University.   " << "\n"   
                  << char(186) << "--------------------------------------------------" << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-                 << char(186);    showStudents(CSnumber, "Computer science");          
+                 << char(186) << " ";    showStudents(CSnumber, "Computer science");          
             cout << char(186) << "--------------------------------------------------" << "\n"    
-                 << char(186);    showStudents(BEnumber, "Business economics");         
+                 << char(186) << " ";    showStudents(BEnumber, "Business economics");         
             cout << char(186) << "--------------------------------------------------" << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-                 << char(186);    showStudents(LWnumber, "Law");                          
+                 << char(186) << " ";    showStudents(LWnumber, "Law");                          
             cout << char(186) << "--------------------------------------------------" << "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-                 << char(186);    showStudents(LNnumber, "Language");                    
+                 << char(186) << " ";    showStudents(LNnumber, "Language");                    
             cout << char(186) << "--------------------------------------------------" << "\n\n";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
         system("PAUSE");
