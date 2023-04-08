@@ -52,7 +52,7 @@ class Student{
         bool surnameFlag = false; 
         bool nameFlag = false;
         
-        //getters and setters for hte private variables (attributes)
+        //getters and setters for the private variables (attributes)
         string getName();
         void setName(string);
 
@@ -78,7 +78,7 @@ class Student{
 int showMainMenu(); //prints main menu and returns4 users choice (for the menu)
 void registerStudent(vector<Student>&, int&, string&, vector<int>&, vector<Student>&, vector<Student>&, vector<Student>&, vector<Student>&, int&, int&, int&, int&, string, string); //registers new student
 void displayAllStudents(vector<Student>&, int&); //prints list of all registered students
-void chooseFacultyList(vector<Student>&, vector<Student>&, vector<Student>&, vector<Student>&, int&, int&, int&, int&);//for choosing and displaying student lists of specifid faculties
+void chooseFacultyList(vector<Student>&, vector<Student>&, vector<Student>&, vector<Student>&, int&, int&, int&, int&);//for choosing and displaying student lists of specific faculties
 void displayUniversityStatistics(int&, int&, int&, int&, int&); //displays number of students and which faculty they belong to
 void endingProgramText(int); //shows when user ends program
 
@@ -194,30 +194,31 @@ void registerStudent(vector<Student>& student, int& i, string& ID, vector<int>& 
 
     do 
     {
-        cout << "Enter Student Name: ";
+        cout << "---------------------------------\n"
+             << "Enter Student Name: ";
         student[i].setName(GetAndSetAttribute(Name));//Same thing here
 
-    } while(student[i].nameFlag == true); // if invalid, prompt again.
+    } while(student[i].nameFlag == true); //if invalid, prompt again.
 
     do 
     {
         cout << "Enter Student Surname: ";
         student[i].setSurname(GetAndSetAttribute(Surname));//and here
 
-    } while(student[i].surnameFlag == true); // if invalid, prompt again.
+    } while(student[i].surnameFlag == true); //if invalid, prompt again.
 
-    cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname() // display student name after registering
+    cout << "\nStudent " << student[i].getName() << " " << student[i].getSurname() //display student name after registering
               << " has been succesfuly registered!\n\n\n";
 
-    ID = std::to_string(CheckAndSetID(IDgenerator(), IDvector)); // generate and validate ID so no duplicates are registered,(IDgenerator generates an ID which is stored in IDVector and validated with CheckAndSetID 
+    ID = std::to_string(CheckAndSetID(IDgenerator(), IDvector)); //generate and validate ID so no duplicates are registered,(IDgenerator generates an ID which is stored in IDVector and validated with CheckAndSetID 
     student[i].setID(ID);                                        //which then is turned into a string and assigned to students ID)
 
     // Find out in which faculty vector to put student
     string Faculty = student[i].getFaculty();
     if(Faculty == "Computer sciences") 
     {
-        CSstudent.push_back(student[i]);
-        CSnumber++; // increment number of students in faculty
+        CSstudent.push_back(student[i]);//add student to specified faculty vector
+        CSnumber++; //increment number of students in faculty
     } 
     else if(Faculty == "Business economics") 
     {
@@ -306,7 +307,7 @@ void chooseFacultyList(vector<Student>& CSstudent, vector<Student>& BEstudent, v
                     {
                         cout << char(201); for(int i = 0; i < 30; i++){cout << char(205);}//top row
                         cout << "\n" << char(186) << "          STUDENT " << j + 1 << ":\n";
-                        CSstudent[j].showStudentInfoFaculty();
+                        CSstudent[j].showStudentInfoFaculty();//prints the list of students
                     }
                 }
                 else
@@ -476,26 +477,26 @@ bool validateAttribute(string attribute) //validates the input of name and surna
     {
         if (!isalpha(attribute[i])) 
         {
-            return false; // if there is a number in the input
+            return false; //if there is a number in the input
         }
     }
-    if(attribute.length() >= 15)//invalidate input if more than 15 characters
+    if(attribute.length() >= 15)//invalidate input if it's more than 15 characters
     {
         return false;
     }
     if (attribute.find(' ') != string::npos) 
     {
-        return false; // if there is more than one word in input
+        return false; //if there is more than one word in input
     }
-    return true; // if input is valid
+    return true; //if input is valid
 }
 
 int CheckAndSetID(int randomN, vector<int>& IDvector)
 {
     //this loop makes sure no duplicate ID is generated
-    while(std::count(IDvector.begin(), IDvector.end(), randomN))//if random is duplicate in ID vector,
-    {                                                          //then generate a new ID until it is 
-        randomN = IDgenerator();                                //unique
+    while(std::count(IDvector.begin(), IDvector.end(), randomN)) //if random is duplicate in ID vector,
+    {                                                            //then generate a new ID until it is 
+        randomN = IDgenerator();                                 //unique
     }
     IDvector.push_back(randomN);//adds ID to the IDvector
     return randomN;
@@ -505,7 +506,7 @@ int ValidateChoice(string input)
 {
     if (input.length() == 1 && std::isdigit(input[0])) //accept choice input only if input is one digit
     {
-        return input[0] - '0';  // Convert char to int
+        return input[0] - '0';  //Convert char to int
     }
     else 
     {
@@ -572,25 +573,25 @@ string ChooseFaculty()//switch case for choosing faculty of student
         switch(facultyChoice)
         {
             case 1:
-                cout << "You have selected the faculty of Computer sciences!\n";
+                cout << "You have selected the faculty of Computer sciences!\n\n";
                 faculty = "Computer sciences"; //sets Students faculty attribute
                 exitFacultyLoop = true;
             break;
                         
             case 2:
-                cout << "You have selected the faculty of Business economics!\n";
+                cout << "You have selected the faculty of Business economics!\n\n";
                 faculty = "Business economics";
                 exitFacultyLoop = true;
             break;
 
             case 3:
-                cout << "You have selected the faculty of Law!\n";
+                cout << "You have selected the faculty of Law!\n\n";
                 faculty = "Law";
                 exitFacultyLoop = true;
             break;
 
             case 4:
-                cout << "You have selected the faculty of Languages!\n";
+                cout << "You have selected the faculty of Languages!\n\n";
                 faculty = "Languages";
                 exitFacultyLoop = true;
             break;
