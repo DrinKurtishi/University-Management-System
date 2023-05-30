@@ -1,0 +1,16 @@
+Name: Drin
+Surname: Kurtishi
+Faculty: Business Economics
+Grade 1: 5
+Grade 2: 6
+Grade 3: 7
+Average Grade: 5.7
+-----------------------------------
+Name: Leart
+Surname: Iseni
+Faculty: Law
+Grade 1: 2
+Grade 2: 2
+Grade 3: 2
+Average Grade: 2
+-----------------------------------
